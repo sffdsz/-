@@ -4,25 +4,27 @@ import com.good.dao.GoodDao;
 import com.good.dao.GoodImpl;
 import com.good.vo.Good;
 
-import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "GoodServlet", value = "/GoodServlet")
 public class GoodServlet extends HttpServlet {
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         GoodDao gd = new GoodImpl();
         try {
-            ArrayList<Good> gls = gd.getGoods();
+            List<Good> gls = gd.getGoods();
+            Good good = gls.get(0);
+            List<String> pictures = good.getPictures();
             HttpSession hs = req.getSession();
-            hs.setAttribute("releasedGoods",gls);
+            hs.setAttribute("pictures",pictures);
+            hs.setAttribute("good", good);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        //resp.sendRedirect("");
+        resp.sendRedirect("home1.jsp");
     }
 }

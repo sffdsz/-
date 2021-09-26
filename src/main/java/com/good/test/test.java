@@ -10,10 +10,11 @@ import java.util.Iterator;
 
 public class test {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        //Good g1 = new Good("00002","2",null,false,false,false,null);
         GoodDao gdl = new GoodImpl();
-       // ArrayList<Good> gls = gdl.getGoods();
-        //gdl.releaseGood("test","test");
+        ArrayList<String> gpls = new ArrayList<>();
+        gpls.add("1");
+        gpls.add("2");
+        gdl.releaseGood("test","2.25",null,gpls,"");
 //        Iterator<Good> it = gls.iterator();
 //        Good g = null;
 //        while(it.hasNext()){

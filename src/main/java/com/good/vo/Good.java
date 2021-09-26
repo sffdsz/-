@@ -15,11 +15,13 @@ public class Good {
     private boolean isOnline;
     private String userid;
     private ArrayList<String> pictures;
+    private String wwhDes;
+    private String origin;
 
     public Good() {
     }
 
-    public Good(int goodId, String goodName, String price, String description, boolean freeze, boolean isPurchased, boolean isOnline, String userid) throws SQLException, ClassNotFoundException {
+    public Good(int goodId, String goodName, String price, String description, boolean freeze, boolean isPurchased, boolean isOnline, String userid, String wwhDes, String origin) throws SQLException, ClassNotFoundException {
         this.goodId = goodId;
         this.goodName = goodName;
         this.price = price;
@@ -28,7 +30,8 @@ public class Good {
         this.isPurchased = isPurchased;
         this.isOnline = isOnline;
         this.userid = userid;
-        setPictures();
+        this.wwhDes = wwhDes;
+        this.origin = origin;
     }
 
     public int getGoodId() {
@@ -99,16 +102,23 @@ public class Good {
         return pictures;
     }
 
-    public void setPictures() throws SQLException, ClassNotFoundException {
-        ArrayList<String> pictures = new ArrayList<String>();
-        Conn c = new Conn();
-        Connection conn = c.connection();
-        String sql = "select picture from goodpicture,good where goodpicture.goodid=good.goodid";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        ResultSet res = pstmt.executeQuery();
-        while (res.next()) {
-            pictures.add(res.getString("picture"));
-        }
+    public void setPictures(ArrayList<String> pictures) throws SQLException, ClassNotFoundException {
         this.pictures = pictures;
+    }
+
+    public String getWwhDes() {
+        return wwhDes;
+    }
+
+    public void setWwhDes(String wwhDes) {
+        this.wwhDes = wwhDes;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 }

@@ -3,10 +3,7 @@ package com.good.dao;
 import com.good.vo.Good;
 import com.jdbc.Conn;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class GoodImpl implements GoodDao{
@@ -16,37 +13,65 @@ public class GoodImpl implements GoodDao{
     public ArrayList<Good> getGoods() throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
-        String sql = "select * from good where isonline = ?";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setBoolean(1,true);
-        ResultSet res = pstmt.executeQuery();
+        String sql1 = "select * from good where isonline = ?";
+        PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+        pstmt1.setBoolean(1,true);
+        ResultSet rs = pstmt1.executeQuery();
         ArrayList<Good> gls = new ArrayList<>();
         Good g;
-        while(res.next()) {
-            g = new Good(res.getInt("goodid"),res.getString("goodname"),res.getString("price"),res.getString("description"),res.getBoolean("freeze"),res.getBoolean("ispurchased"),res.getBoolean("isonline"),res.getString("userid"));
+        String sql2;
+        ArrayList<String> pictures = new ArrayList<>();
+        while(rs.next()) {
+            g = new Good(rs.getInt("goodid"),rs.getString("goodname"),rs.getString("price"),rs.getString("description"),rs.getBoolean("freeze"),rs.getBoolean("ispurchased"),rs.getBoolean("isonline"),rs.getString("userid"),rs.getString("wwhdes"),rs.getString("origin"));
+            sql2 = "select picture from goodpicture where goodid = ?";
+            PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+            pstmt2.setInt(1,rs.getInt("goodid"));
+            ResultSet rs2 = pstmt2.executeQuery();
+            while(rs2.next()){
+                pictures.add(rs2.getString("picture"));
+            }
+            rs2.close();
+            pstmt2.close();
+            g.setPictures(pictures);
             gls.add(g);
         }
-        res.close();
-        pstmt.close();
+        rs.close();
+        pstmt1.close();
         conn.close();
         return gls;
     }
 
     @Override
-    public void releaseGood(int goodname, String price, String description, ArrayList<String> goodpicture) throws SQLException, ClassNotFoundException {
+    public void releaseGood(String goodname, String price, String description, ArrayList<String> picture, String wwhDes) throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
-        String sql = "insert into good(goodname,price,description,freeze,ispurchased,isonline,userid) values(?,?,?,?,?,?,?)";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1,goodname);
-        pstmt.setString(2,price);
-        pstmt.setString(3,description);
-        pstmt.setBoolean(4,false);
-        pstmt.setBoolean(5,false);
-        pstmt.setBoolean(6,true);
-        pstmt.setString(7,null);
-        pstmt.execute();
-        pstmt.close();
+        String sql1 = "insert into good(goodname,price,description,freeze,ispurchased,isonline,userid,wwhdes) values(?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+        pstmt1.setString(1,goodname);
+        pstmt1.setString(2,price);
+        pstmt1.setString(3,description);
+        pstmt1.setBoolean(4,false);
+        pstmt1.setBoolean(5,false);
+        pstmt1.setBoolean(6,true);
+        pstmt1.setString(7,null);
+        pstmt1.setString(8,wwhDes);
+        pstmt1.execute();
+        String sql2 = "select goodid from good order by goodid desc limit 1";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql2);
+        int goodid = 0;
+        if(rs.next()){
+            goodid = rs.getInt("goodid");
+        }
+        String sql3 = "insert into goodpicture(goodid, picture) values(?,?)";
+        for (String s : picture) {
+            PreparedStatement pstmt2 = conn.prepareStatement(sql3);
+            pstmt2.setInt(1, goodid);
+            pstmt2.setString(2, s);
+            pstmt2.execute();
+            pstmt2.close();
+        }
+        pstmt1.close();
         conn.close();
     }
 
@@ -73,8 +98,19 @@ public class GoodImpl implements GoodDao{
         ResultSet res = pstmt.executeQuery();
         ArrayList<Good> gls = new ArrayList<>();
         Good g;
+        String sql2;
+        ArrayList<String> pictures = new ArrayList<>();
         while(res.next()){
-            g = new Good(res.getInt("goodid"),res.getString("goodname"),res.getString("price"),res.getString("description"),res.getBoolean("freeze"),res.getBoolean("ispurchased"),res.getBoolean("isonline"),res.getString("userid"));
+            g = new Good(res.getInt("goodid"),res.getString("goodname"),res.getString("price"),res.getString("description"),res.getBoolean("freeze"),res.getBoolean("ispurchased"),res.getBoolean("isonline"),res.getString("userid"),res.getString("wwhdes"), res.getString("origin"));
+            sql2 = "select picture from goodpicture where goodid = ?";
+            PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+            pstmt2.setInt(1,res.getInt("goodid"));
+            ResultSet rs2 = pstmt2.executeQuery();
+            while(rs2.next()){
+                pictures.add(rs2.getString("picture"));
+            }
+            rs2.close();
+            pstmt2.close();
             gls.add(g);
         }
         pstmt.close();
