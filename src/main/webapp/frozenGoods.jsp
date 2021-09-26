@@ -172,8 +172,8 @@
     <table class="title">
         <tr id="title_tr" align="center">
             <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="./index.jsp" class="astyle">发布商品</a></td>
-            <td width="10%" class="title_td"><a href="" class="astyle">历史商品</a></td>
+            <td width="10%" class="title_td"><a href="./upload.jspp" class="astyle">发布商品</a></td>
+            <td width="10%" class="title_td"><a href="./history.jsp" class="astyle">历史商品</a></td>
             <td width="10%" class="title_td"><a href="./customBuy.jsp" class="astyle">购买人</a></td>
             <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
         </tr>

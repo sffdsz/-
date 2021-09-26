@@ -202,7 +202,7 @@
             <td width="60%" align="center"><a href="./home1.jsp" id="titleText">在 线 购 物 系 统</a></td>
             <td width="10%" class="title_td"><a href="./home1.jsp" class="astyle">商品列表</a></td>
             <td width="10%" class="title_td"><a class="astyle" onclick="dianji()">商品状态</a></td>
-            <td width="10%" class="title_td"><a href="" class="astyle">商家登录</a></td>
+            <td width="10%" class="title_td"><a href="./sign_in.jsp" class="astyle">商家登录</a></td>
 
         </tr>
     </table>

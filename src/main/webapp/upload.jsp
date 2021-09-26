@@ -202,23 +202,23 @@
 </style>
 <script>
     function panDuan() {
-        var username = document.getElementById("username").value;
-        var transactionaddress = document.getElementById("transactionaddress").value;
-        var userphone = document.getElementById("userphone").value;
+        var goodsname = document.getElementById("goodsname").value;
+        var goodsprice = document.getElementById("goodsprice").value;
+        var dscription = document.getElementById("dscription").value;
         var flag = 1;
-        if (username == "") {
-            document.getElementById("username").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("username").placeholder = "请输入姓名";
+        if (goodsname == "") {
+            document.getElementById("goodsname").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("goodsname").placeholder = "请输入用户名";
             flag = 0;
         }
-        if (transactionaddress == "") {
-            document.getElementById("transactionaddress").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("transactionaddress").placeholder = "请输入地址";
+        if (goodsprice == "") {
+            document.getElementById("goodsprice").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("goodsprice").placeholder = "请输入密码";
             flag = 0;
         }
-        if (userphone == "") {
-            document.getElementById("userphone").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("userphone").placeholder = "请输入电话号码";
+        if (dscription == "") {
+            document.getElementById("dscription").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("dscription").placeholder = "请输入密码";
             flag = 0;
         }
         if (flag == 1) {
@@ -228,31 +228,41 @@
     }
 </script>
 <body style="text-align: center; background-image: url(pictures/background.png)">
-<div class="navbar navbar-inverse">
+<div class="navbar11 navbar-inverse">
     <table class="title">
         <tr id="title_tr" align="center">
-            <td width="60%" align="center"><a href="./home1.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="./home1.jsp" class="astyle">商品列表</a></td>
-            <td width="10%" class="title_td"><a class="astyle" onclick="dianji()">商品状态</a></td>
-            <td width="10%" class="title_td"><a href="./sign_in.jsp" class="astyle">商家登录</a></td>
+            <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
+            <td width="10%" class="title_td"><a href="./upload.jsp" class="astyle">发布商品</a></td>
+            <td width="10%" class="title_td"><a href="./history.jsp" class="astyle">历史商品</a></td>
+            <td width="10%" class="title_td"><a href="./customBuy.jsp" class="astyle">购买人</a></td>
+            <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
         </tr>
     </table>
 </div>
-<div style="margin: 0 auto; width: 50%; margin-top: 10%">
-    <form action="" method="post">
+<div style="margin: 0 auto; width: 50%; margin-top: 7%">
+    <form action="" method="post" entype="multipart/form-data">
         <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
             <div>
-                <span style="font-size: xxx-large; color: whitesmoke; text-align: center">购物信息录入</span>
+                <span style="font-size: xxx-large; color: whitesmoke; text-align: center">发布商品</span>
             </div>
             <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
                 <tr>
-                    <td class="t2" width="30%">姓名</td><td width="70%"><input type="text" name="username" class="i1" id="username"></td>
+                    <td class="t2" width="30%">商品名称</td><td width="70%"><input type="text" name="goodsname" class="i1" id="goodsname"></td>
                 </tr>
                 <tr>
-                    <td class="t2">地址</td><td><input type="text" name="transactionaddress" class="i1" id="transactionaddress"></td>
+                    <td class="t2">商品价格</td><td><input type="text" name="goodsprice" class="i1" id="goodsprice"></td>
                 </tr>
                 <tr>
-                    <td class="t2" >手机号</td><td><input type="text" name="userphone" class="i1" id="userphone"></td>
+                    <td class="t2">商品描述</td><td><input type="text" name="description" class="i1" id="dscription"></td>
+                </tr>
+                <tr>
+                    <td class="t2">站长描述</td><td><input type="text" name="wwhDes" class="i1" id="wwhDes"></td>
+                </tr>
+                <tr>
+                    <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>
+                </tr>
+                <tr>
+                    <td class="t2">图片上传</td><td><input type="file" name="fileupload" class="i1" id="fileupload"></td>
                 </tr>
             </table>
             <span style="margin-right: 5%"><button class="bt1" type="button" onclick="panDuan()">提交</button></span><span><input type="reset" value="重置" class="i2"></span>
