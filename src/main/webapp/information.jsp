@@ -125,10 +125,10 @@
         box-shadow: inset 0 1px 1px white,0 0 8px dodgerblue;
     }
     input.i2{
-        background-color: #4CAF50; /* Green */
+        background-color: salmon; /* Green */
         border: none;
         color: white;
-        padding: 15px 32px;
+        padding: 10px 28px;
         margin-top: 5%;
         text-align: center;
         text-decoration: none;
@@ -140,10 +140,10 @@
         cursor: pointer;
     }
     .bt1{
-        background-color: #4CAF50; /* Green */
+        background-color: salmon; /* Green */
         border: none;
         color: white;
-        padding: 15px 32px;
+        padding: 10px 28px;
         margin-top: 5%;
         text-align: center;
         text-decoration: none;
@@ -240,22 +240,22 @@
 </div>
 <div style="margin: 0 auto; width: 50%; margin-top: 10%">
     <form action="" method="post">
-        <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 20%; margin-right: 20%; padding-top: 5%; padding-bottom: 7%">
+        <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
             <div>
                 <span style="font-size: xxx-large; color: whitesmoke; text-align: center">购物信息录入</span>
             </div>
-            <table style="margin: 0 auto; border-spacing: 30px 30px; border-style: none" >
+            <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
                 <tr>
-                    <td class="t2">姓名</td><td><input type="text" name="username" class="i1" id="username"></td>
+                    <td class="t2" width="30%">姓名</td><td width="70%"><input type="text" name="username" class="i1" id="username"></td>
                 </tr>
                 <tr>
                     <td class="t2">地址</td><td><input type="text" name="transactionaddress" class="i1" id="transactionaddress"></td>
                 </tr>
                 <tr>
-                    <td class="t2">电话号码</td><td><input type="text" name="userphone" class="i1" id="userphone"></td>
+                    <td class="t2" >手机号</td><td><input type="text" name="userphone" class="i1" id="userphone"></td>
                 </tr>
             </table>
-            <button class="bt1" type="button" onclick="panDuan()">提交</button>&nbsp;&nbsp;<input type="reset" value="重置" class="i2">
+            <span style="margin-right: 5%"><button class="bt1" type="button" onclick="panDuan()">提交</button></span><span><input type="reset" value="重置" class="i2"></span>
         </div>
     </form>
 </div>

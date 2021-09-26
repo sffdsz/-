@@ -155,6 +155,7 @@
     }
 %>
 
+
 <script>
     var index = 0;
     var imgList = "<%=s%>".split(" ");
