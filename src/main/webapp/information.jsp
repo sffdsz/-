@@ -8,7 +8,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.onlineShopping2.Good" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -122,8 +121,8 @@
     input.i1:focus{
         border-color: #66afe9;
         outline: 0;
-        -webkit-box-shadow: inset 0 1px 1px white,0 0 8px red;
-        box-shadow: inset 0 1px 1px white,0 0 8px red;
+        -webkit-box-shadow: inset 0 1px 1px dodgerblue,0 0 8px dodgerblue;
+        box-shadow: inset 0 1px 1px white,0 0 8px dodgerblue;
     }
     input.i2{
         background-color: #4CAF50; /* Green */
@@ -138,6 +137,7 @@
         border-radius: 5px;
         font-style: inherit;
         font-family: "Microsoft Himalaya";
+        cursor: pointer;
     }
     .bt1{
         background-color: #4CAF50; /* Green */
@@ -152,6 +152,7 @@
         border-radius: 5px;
         font-style: inherit;
         font-family: "Microsoft Himalaya";
+        cursor: pointer;
     }
     #titleText{
         background-color: #037bd2;
@@ -206,18 +207,18 @@
         var userphone = document.getElementById("userphone").value;
         var flag = 1;
         if (username == "") {
-            document.getElementById("name").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("name").placeholder = "请输入姓名";
+            document.getElementById("username").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("username").placeholder = "请输入姓名";
             flag = 0;
         }
         if (transactionaddress == "") {
-            document.getElementById("address").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("address").placeholder = "请输入地址";
+            document.getElementById("transactionaddress").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("transactionaddress").placeholder = "请输入地址";
             flag = 0;
         }
         if (userphone == "") {
-            document.getElementById("price").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("price").placeholder = "请输入电话号码";
+            document.getElementById("userphone").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("userphone").placeholder = "请输入电话号码";
             flag = 0;
         }
         if (flag == 1) {
