@@ -223,7 +223,7 @@
         }
         if (flag == 1) {
             alert("提交成功！");
-            location.href = "./home1.jsp?"
+            location.href = "UserServlet?username="+username+"&userphone="+userphone+"&transactionaddress="+transactionaddress;
         }
     }
 </script>

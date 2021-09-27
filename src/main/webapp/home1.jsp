@@ -1,4 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="com.good.vo.Good" %>
@@ -228,11 +227,11 @@
                 <img src="pictures/mg.png" class="i1">
             </div>
             <div style="padding-top: 5%; padding-left: 50%; text-align: left">
-                <h1 style="margin: 0 auto">${good.goodName}</h1>
-                <h6 style="color: red">${good.wwhDes}</h6>
+                <h1 style="margin: 0 auto">${sessionScope.good.goodName}</h1>
+                <h6 style="color: red">${sessionScope.good.wwhDes}</h6>
             </div>
             <div style="padding-top: 2%; padding-bottom: 2%; padding-left: 50%; text-align: left; background-image: url(pictures/price3.png)">
-                <span style="color: orangered; font-size: large; text-align: center; padding-bottom: 15px">价格</span><span style="color: orangered; font-size: xxx-large; text-align: center; margin-left: 10%">${good.price}</span>
+                <span style="color: orangered; font-size: large; text-align: center; padding-bottom: 15px">价格</span><span style="color: orangered; font-size: xxx-large; text-align: center; margin-left: 10%">${sessionScope.good.price}</span>
             </div>
             <div style="margin: 0 auto; float: left; padding-top: 10%; padding-left: 10%">
                 <input type="submit" value="选购" class="button1">
@@ -244,7 +243,7 @@
             </div>
             <div style="margin: 0 auto; text-align: center; margin-top: 10%">
                 <span><img src="pictures/back.png" style="width: 10%; height: 10%; cursor: pointer" onclick="back()"></span>
-                <c:forEach items="${pictures}" var="i" varStatus="st">
+                <c:forEach items="${sessionScope.pictures}" var="i" varStatus="st">
                     <span id="${st.index}" style="max-width: 30%; box-shadow: 0px 0px 10px #2e6da4"><img class="i3" src="${i}"></span>
                 </c:forEach>
                 <span><img src="pictures/more.png" style="width: 10%; height: 10%; cursor: pointer" onclick="next()"></span>
@@ -252,13 +251,13 @@
         </div>
         <div style="width: 90%; height: 100%; float: left;display: none; background: #d9edf7" id="w3">
             <div style="margin-top: 10%; margin-left: 5%; margin-right: 5%;">
-                <span class="sp1">商品名称：</span><span class="sp2">${good.goodName}</span>
+                <span class="sp1">商品名称：</span><span class="sp2">${sessionScope.good.goodName}</span>
             </div>
             <div style="margin-top: 3%; margin-left: 5%; margin-right: 5%;">
-                <span class="sp1">商品产地：</span><span class="sp2">${good.origin}</span>
+                <span class="sp1">商品产地：</span><span class="sp2">${sessionScope.good.origin}</span>
             </div>
             <div style="margin-top: 3%; margin-left: 5%; margin-right: 5%;">
-                <span class="sp1">商品状态：</span><span class="sp2">${good.isOnline()?"在售":"已下架"}</span>
+                <span class="sp1">商品状态：</span><span class="sp2">${sessionScope.good.online?(sessionScope.good.freeze?"冻结":"在售"):"已下架"}</span>
             </div>
             <div style="margin-top: 5%; margin-left: 5%; margin-right: 5%; border: 3px #a94442; border-radius: 10px; z-index: 9999; border-style: dotted">
                 <span class="sp1">${good.description}</span>

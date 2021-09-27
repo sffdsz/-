@@ -1,8 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.onlineShopping2.Good" %>
-<%@ page import="com.example.onlineShopping2.Custom" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -130,17 +128,12 @@
 
 </script>
 <body style="background-image: url(pictures/background.png)">
-<%
-    List<Custom> clist = new ArrayList<Custom>();
-    clist.add(new Custom("jack", "杭州", "100"));
-    session.setAttribute("custom", clist);
-%>
 <div class="navbar11 navbar-inverse">
     <table class="title1">
         <tr id="title_tr" align="center">
             <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="./index.jsp" class="astyle">发布商品</a></td>
-            <td width="10%" class="title_td"><a href="" class="astyle">历史商品</a></td>
+            <td width="10%" class="title_td"><a href="./upload.jsp" class="astyle">发布商品</a></td>
+            <td width="10%" class="title_td"><a href="./history.jsp" class="astyle">历史商品</a></td>
             <td width="10%" class="title_td"><a href="./customBuy.jsp" class="astyle">购买人</a></td>
             <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
         </tr>
@@ -154,10 +147,10 @@
             <th>用户ID</th><th>姓名</th><th>地址</th><th>出价</th><th>操作</th>
         </tr>
         <c:choose>
-            <c:when test="${not empty custom}">
-                <c:forEach items="${custom}" var="c" varStatus="s">
+            <c:when test="${not empty requestScope.userlist}">
+                <c:forEach items="${requestScope.userlist}" var="c" varStatus="s">
                     <tr style="margin-top: 50%">
-                        <td>${c.uid}</td><td>${c.name}</td><td>${c.address}</td><td>${c.prive}</td><td><input type="submit" value="出售" class="cs"></td>
+                        <td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td><td><input type="submit" value="出售" class="cs"></td>
                     </tr>
                 </c:forEach>
             </c:when>

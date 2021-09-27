@@ -8,9 +8,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.onlineShopping2.Good" %>
-<%@ page import="com.example.onlineShopping2.Custom" %>
-<%@ page import="com.example.onlineShopping2.HistoryGood" %>
+<%@ page import="com.good.vo.Good" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -163,17 +161,12 @@
 
 </script>
 <body style="background-image: url(pictures/background.png)">
-<%
-    List<HistoryGood> glist = new ArrayList<HistoryGood>();
-    glist.add(new HistoryGood(1, "芒果", "mg.png"));
-    session.setAttribute("history", glist);
-%>
 <div class="navbar11 navbar-inverse">
     <table class="title">
         <tr id="title_tr" align="center">
             <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="./index.jsp" class="astyle">发布商品</a></td>
-            <td width="10%" class="title_td"><a href="" class="astyle">历史商品</a></td>
+            <td width="10%" class="title_td"><a href="./upload.jsp" class="astyle">发布商品</a></td>
+            <td width="10%" class="title_td"><a href="./history.jsp" class="astyle">历史商品</a></td>
             <td width="10%" class="title_td"><a href="./customBuy.jsp" class="astyle">购买人</a></td>
             <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
         </tr>
@@ -187,10 +180,10 @@
                 <th>商品图</th><th>商品ID</th><th>商品名</th><th>操作</th>
             </tr>
             <c:choose>
-                <c:when test="${not empty history}">
-                    <c:forEach items="${history}" var="c" varStatus="s">
+                <c:when test="${not empty sessionScope.gls}">
+                    <c:forEach items="${sessionScope.gls}" var="c" varStatus="s">
                         <tr style="margin: 0 auto">
-                            <td><img src="${pageContext.request.contextPath}/pictures/${c.url}"></td><td>${c.gid}</td><td>${c.gname}</td>
+                            <td><img src="${pageContext.request.contextPath}/${sessionScope.pictures.get(0)}"></td><td>${c.goodId}</td><td>${c.goodName}</td>
                             <td>
                                 <span><a><button class="but1">解除冻结</button></a></span>
                                 &nbsp;&nbsp;&nbsp;

@@ -8,7 +8,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.onlineShopping2.Good" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -122,14 +121,14 @@
     input.i1:focus{
         border-color: #66afe9;
         outline: 0;
-        -webkit-box-shadow: inset 0 1px 1px white,0 0 8px red;
-        box-shadow: inset 0 1px 1px white,0 0 8px red;
+        -webkit-box-shadow: inset 0 1px 1px dodgerblue,0 0 8px dodgerblue;
+        box-shadow: inset 0 1px 1px white,0 0 8px dodgerblue;
     }
     input.i2{
-        background-color: #4CAF50; /* Green */
+        background-color: salmon; /* Green */
         border: none;
         color: white;
-        padding: 15px 32px;
+        padding: 10px 28px;
         margin-top: 5%;
         text-align: center;
         text-decoration: none;
@@ -138,12 +137,13 @@
         border-radius: 5px;
         font-style: inherit;
         font-family: "Microsoft Himalaya";
+        cursor: pointer;
     }
     .bt1{
-        background-color: #4CAF50; /* Green */
+        background-color: salmon; /* Green */
         border: none;
         color: white;
-        padding: 15px 32px;
+        padding: 10px 28px;
         margin-top: 5%;
         text-align: center;
         text-decoration: none;
@@ -152,6 +152,7 @@
         border-radius: 5px;
         font-style: inherit;
         font-family: "Microsoft Himalaya";
+        cursor: pointer;
     }
     #titleText{
         background-color: #037bd2;
@@ -206,23 +207,23 @@
         var userphone = document.getElementById("userphone").value;
         var flag = 1;
         if (username == "") {
-            document.getElementById("name").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("name").placeholder = "请输入姓名";
+            document.getElementById("username").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("username").placeholder = "请输入姓名";
             flag = 0;
         }
         if (transactionaddress == "") {
-            document.getElementById("address").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("address").placeholder = "请输入地址";
+            document.getElementById("transactionaddress").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("transactionaddress").placeholder = "请输入地址";
             flag = 0;
         }
         if (userphone == "") {
-            document.getElementById("price").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("price").placeholder = "请输入电话号码";
+            document.getElementById("userphone").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("userphone").placeholder = "请输入电话号码";
             flag = 0;
         }
         if (flag == 1) {
             alert("提交成功！");
-            location.href = "./home1.jsp?"
+            location.href = "UserServlet?username="+username+"&userphone="+userphone+"&transactionaddress="+transactionaddress;
         }
     }
 </script>
@@ -233,28 +234,28 @@
             <td width="60%" align="center"><a href="./home1.jsp" id="titleText">在 线 购 物 系 统</a></td>
             <td width="10%" class="title_td"><a href="./home1.jsp" class="astyle">商品列表</a></td>
             <td width="10%" class="title_td"><a class="astyle" onclick="dianji()">商品状态</a></td>
-            <td width="10%" class="title_td"><a href="" class="astyle">商家登录</a></td>
+            <td width="10%" class="title_td"><a href="./sign_in.jsp" class="astyle">商家登录</a></td>
         </tr>
     </table>
 </div>
 <div style="margin: 0 auto; width: 50%; margin-top: 10%">
     <form action="" method="post">
-        <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 20%; margin-right: 20%; padding-top: 5%; padding-bottom: 7%">
+        <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
             <div>
                 <span style="font-size: xxx-large; color: whitesmoke; text-align: center">购物信息录入</span>
             </div>
-            <table style="margin: 0 auto; border-spacing: 30px 30px; border-style: none" >
+            <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
                 <tr>
-                    <td class="t2">姓名</td><td><input type="text" name="username" class="i1" id="username"></td>
+                    <td class="t2" width="30%">姓名</td><td width="70%"><input type="text" name="username" class="i1" id="username"></td>
                 </tr>
                 <tr>
                     <td class="t2">地址</td><td><input type="text" name="transactionaddress" class="i1" id="transactionaddress"></td>
                 </tr>
                 <tr>
-                    <td class="t2">电话号码</td><td><input type="text" name="userphone" class="i1" id="userphone"></td>
+                    <td class="t2" >手机号</td><td><input type="text" name="userphone" class="i1" id="userphone"></td>
                 </tr>
             </table>
-            <button class="bt1" type="button" onclick="panDuan()">提交</button>&nbsp;&nbsp;<input type="reset" value="重置" class="i2">
+            <span style="margin-right: 5%"><button class="bt1" type="button" onclick="panDuan()">提交</button></span><span><input type="reset" value="重置" class="i2"></span>
         </div>
     </form>
 </div>

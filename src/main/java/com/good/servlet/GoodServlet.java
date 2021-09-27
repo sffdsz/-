@@ -22,6 +22,7 @@ public class GoodServlet extends HttpServlet {
             HttpSession hs = req.getSession();
             hs.setAttribute("pictures",pictures);
             hs.setAttribute("good", good);
+            hs.setAttribute("gls",gls);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

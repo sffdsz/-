@@ -14,7 +14,7 @@ public class test {
         ArrayList<String> gpls = new ArrayList<>();
         gpls.add("1");
         gpls.add("2");
-        gdl.releaseGood("test","2.25",null,gpls,"");
+        gdl.releaseGood("test","2.25",null,gpls,"","");
 //        Iterator<Good> it = gls.iterator();
 //        Good g = null;
 //        while(it.hasNext()){

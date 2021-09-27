@@ -128,11 +128,6 @@
 
 </script>
 <body style="background-image: url(pictures/background.png)">
-<%
-    List<Custom> clist = new ArrayList<Custom>();
-    clist.add(new Custom("jack", "杭州", "100"));
-    session.setAttribute("custom", clist);
-%>
 <div class="navbar11 navbar-inverse">
     <table class="title1">
         <tr id="title_tr" align="center">
@@ -152,10 +147,10 @@
             <th>用户ID</th><th>姓名</th><th>地址</th><th>出价</th><th>操作</th>
         </tr>
         <c:choose>
-            <c:when test="${not empty custom}">
-                <c:forEach items="${custom}" var="c" varStatus="s">
+            <c:when test="${not empty requestScope.userlist}">
+                <c:forEach items="${requestScope.userlist}" var="c" varStatus="s">
                     <tr style="margin-top: 50%">
-                        <td>${c.uid}</td><td>${c.name}</td><td>${c.address}</td><td>${c.prive}</td><td><input type="submit" value="出售" class="cs"></td>
+                        <td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td><td><input type="submit" value="出售" class="cs"></td>
                     </tr>
                 </c:forEach>
             </c:when>

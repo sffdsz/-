@@ -42,10 +42,10 @@ public class GoodImpl implements GoodDao{
     }
 
     @Override
-    public void releaseGood(String goodname, String price, String description, ArrayList<String> picture, String wwhDes) throws SQLException, ClassNotFoundException {
+    public void releaseGood(String goodname, String price, String description, ArrayList<String> picture, String wwhDes, String origin) throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
-        String sql1 = "insert into good(goodname,price,description,freeze,ispurchased,isonline,userid,wwhdes) values(?,?,?,?,?,?,?,?)";
+        String sql1 = "insert into good(goodname,price,description,freeze,ispurchased,isonline,userid,wwhdes,origin) values(?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt1 = conn.prepareStatement(sql1);
         pstmt1.setString(1,goodname);
         pstmt1.setString(2,price);
@@ -55,6 +55,7 @@ public class GoodImpl implements GoodDao{
         pstmt1.setBoolean(6,true);
         pstmt1.setString(7,null);
         pstmt1.setString(8,wwhDes);
+        pstmt1.setString(9,origin);
         pstmt1.execute();
         String sql2 = "select goodid from good order by goodid desc limit 1";
         Statement stmt = conn.createStatement();
@@ -119,7 +120,7 @@ public class GoodImpl implements GoodDao{
     }
 
     @Override
-    public void freezeGood(int goodid, String userid) throws SQLException, ClassNotFoundException {
+    public void freezeGood(int goodid) throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
         String sql1 = "update good set freeze = true where goodid = ?";
@@ -127,13 +128,6 @@ public class GoodImpl implements GoodDao{
         pstmt1.setInt(1,goodid);
         pstmt1.execute();
         pstmt1.close();
-        String sql2 = "update transaction set ischosen = ? where goodid = ? and userid = ?";
-        PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-        pstmt2.setBoolean(1,true);
-        pstmt2.setInt(2,goodid);
-        pstmt2.setString(3,userid);
-        pstmt2.execute();
-        pstmt2.close();
         conn.close();
     }
 
@@ -146,13 +140,6 @@ public class GoodImpl implements GoodDao{
         pstmt1.setInt(1,goodid);
         pstmt1.execute();
         pstmt1.close();
-        String sql2 = "update transaction set ischosen = ? where goodid = ? and ischosen = ?";
-        PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-        pstmt2.setBoolean(1,false);
-        pstmt2.setInt(2,goodid);
-        pstmt2.setBoolean(3,true);
-        pstmt2.execute();
-        pstmt2.close();
         conn.close();
     }
 

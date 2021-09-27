@@ -1,7 +1,3 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Arrays" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.onlineShopping2.Good" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -38,14 +34,14 @@
         width: 100%;
         height: 10%;
         top: 0;
-        background-color: cornflowerblue;
+        background-color: #037bd2;
     }
     #title{
         font-size: xxx-large;
         color: whitesmoke;
     }
     button.title_button{
-        background-color: cornflowerblue;
+        background-color: #037bd2;
         font-size: xx-large;
         color: whitesmoke;
         transition-duration: 0.4s;
@@ -62,7 +58,7 @@
         border: none;
     }
     #title_tr{
-        color: cornflowerblue;
+        color: #037bd2;
         border-style: none;
     }
     td.title_td{
@@ -86,7 +82,7 @@
         background-color: slategrey;
     }
     a.astyle{
-        background-color: cornflowerblue;
+        background-color: #037bd2;
         font-size: xx-large;
         color: whitesmoke;
         transition-duration: 0.4s;
@@ -106,12 +102,11 @@
 <div class="navbar navbar-inverse">
     <table class="title">
         <tr id="title_tr" align="center">
-            <td width="60%" align="center" id="title"><a href="./setting.jsp" class="astyle">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="./index.jsp" class="astyle">发布商品</a></td>
-            <td width="10%" class="title_td"><a href="" class="astyle">历史商品</a></td>
-            <td width="10%" class="title_td"><a href="./customBuy.jsp" class="astyle">购买人</a></td>
+            <td width="60%" align="center" id="title"><a href="./home1.jsp" class="astyle">在 线 购 物 系 统</a></td>
+            <td width="10%" class="title_td"><a href="./upload.jsp" class="astyle">发布商品</a></td>
+            <td width="10%" class="title_td"><a href="./history.jsp" class="astyle">历史商品</a></td>
+            <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
             <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
-
         </tr>
     </table>
 </div>
