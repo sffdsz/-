@@ -1,5 +1,8 @@
 package com.good.servlet;
-
+/*
+ * @author jChen
+ * @detail: GoodServlet
+ */
 import com.good.dao.GoodDao;
 import com.good.dao.GoodImpl;
 import com.good.vo.Good;
@@ -16,9 +19,10 @@ public class GoodServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         GoodDao gd = new GoodImpl();
         try {
-            List<Good> gls = gd.getGoods();
-            Good good = gls.get(0);
-            List<String> pictures = good.getPictures();
+            List<Good> gls = gd.getGoods();//获取在售商品列表
+            Good good = gls.get(0);//只有一个商品，取第一个商品
+            List<String> pictures = good.getPictures();//取商品的图片路径
+            //存入session
             HttpSession hs = req.getSession();
             hs.setAttribute("pictures",pictures);
             hs.setAttribute("good", good);
@@ -26,6 +30,7 @@ public class GoodServlet extends HttpServlet {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        //跳转到商品页面
         resp.sendRedirect("home1.jsp");
     }
 }

@@ -1,5 +1,8 @@
 package com.good.dao;
-
+/*
+ * @author jChen
+ * @detail: implements interface about good
+ */
 import com.good.vo.Good;
 import com.jdbc.Conn;
 
@@ -20,8 +23,9 @@ public class GoodImpl implements GoodDao{
         ArrayList<Good> gls = new ArrayList<>();
         Good g;
         String sql2;
-        ArrayList<String> pictures = new ArrayList<>();
+        ArrayList<String> pictures = null;
         while(rs.next()) {
+            pictures = new ArrayList<String>();
             g = new Good(rs.getInt("goodid"),rs.getString("goodname"),rs.getString("price"),rs.getString("description"),rs.getBoolean("freeze"),rs.getBoolean("ispurchased"),rs.getBoolean("isonline"),rs.getString("userid"),rs.getString("wwhdes"),rs.getString("origin"));
             sql2 = "select picture from goodpicture where goodid = ?";
             PreparedStatement pstmt2 = conn.prepareStatement(sql2);
@@ -43,8 +47,10 @@ public class GoodImpl implements GoodDao{
 
     @Override
     public void releaseGood(String goodname, String price, String description, ArrayList<String> picture, String wwhDes, String origin) throws SQLException, ClassNotFoundException {
+        //连接数据库
         Conn c = new Conn();
         Connection conn = c.connection();
+        //把商品信息加入数据库
         String sql1 = "insert into good(goodname,price,description,freeze,ispurchased,isonline,userid,wwhdes,origin) values(?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt1 = conn.prepareStatement(sql1);
         pstmt1.setString(1,goodname);
@@ -57,6 +63,7 @@ public class GoodImpl implements GoodDao{
         pstmt1.setString(8,wwhDes);
         pstmt1.setString(9,origin);
         pstmt1.execute();
+        //找到本次加入商品的id
         String sql2 = "select goodid from good order by goodid desc limit 1";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql2);
@@ -64,6 +71,7 @@ public class GoodImpl implements GoodDao{
         if(rs.next()){
             goodid = rs.getInt("goodid");
         }
+        //将商品图片路径加入数据库
         String sql3 = "insert into goodpicture(goodid, picture) values(?,?)";
         for (String s : picture) {
             PreparedStatement pstmt2 = conn.prepareStatement(sql3);
@@ -80,6 +88,7 @@ public class GoodImpl implements GoodDao{
     public void offLoadGood(int goodid) throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
+        //通过id修改数据库中商品状态为下架状态
         String sql1 = "update good set isonline = ? where goodid = ?";
         PreparedStatement pstmt1 = conn.prepareStatement(sql1);
         pstmt1.setBoolean(1,false);
@@ -93,14 +102,15 @@ public class GoodImpl implements GoodDao{
     public ArrayList<Good> viewHisGood() throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
+        //通过商品状态找出历史商品信息
         String sql = "select * from good where isonline = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setBoolean(1,false);
         ResultSet res = pstmt.executeQuery();
-        ArrayList<Good> gls = new ArrayList<>();
-        Good g;
+        ArrayList<Good> gls = new ArrayList<>();//商品信息列表
+        Good g;//商品
         String sql2;
-        ArrayList<String> pictures = new ArrayList<>();
+        ArrayList<String> pictures = new ArrayList<>();//图片路径列表
         while(res.next()){
             g = new Good(res.getInt("goodid"),res.getString("goodname"),res.getString("price"),res.getString("description"),res.getBoolean("freeze"),res.getBoolean("ispurchased"),res.getBoolean("isonline"),res.getString("userid"),res.getString("wwhdes"), res.getString("origin"));
             sql2 = "select picture from goodpicture where goodid = ?";
@@ -123,6 +133,7 @@ public class GoodImpl implements GoodDao{
     public void freezeGood(int goodid) throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
+        //通过商品id修改为冻结状态
         String sql1 = "update good set freeze = true where goodid = ?";
         PreparedStatement pstmt1 = conn.prepareStatement(sql1);
         pstmt1.setInt(1,goodid);
@@ -135,6 +146,7 @@ public class GoodImpl implements GoodDao{
     public void goodBackOnline(int goodid) throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
+        //通过商品id修改为解冻状态
         String sql1 = "update good set freeze = false where goodid = ?";
         PreparedStatement pstmt1 = conn.prepareStatement(sql1);
         pstmt1.setInt(1,goodid);
@@ -147,6 +159,7 @@ public class GoodImpl implements GoodDao{
     public void transactionSuccess(int goodid) throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
+        //交易成功，商品下架
         String sql1 = "update good set isonline = ? where goodid = ?";
         PreparedStatement pstmt1 = conn.prepareStatement(sql1);
         pstmt1.setBoolean(1,false);

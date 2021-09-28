@@ -1,27 +1,28 @@
 package com.good.vo;
-
-import com.jdbc.Conn;
-
-import java.sql.*;
+/*
+ * @author jChen
+ * @detail:商品类
+ */
 import java.util.ArrayList;
 
 public class Good {
-    private int goodId;
-    private String goodName;
-    private String price;
-    private String description;
-    private boolean freeze;
-    private boolean isPurchased;
-    private boolean isOnline;
-    private String userid;
-    private ArrayList<String> pictures;
-    private String wwhDes;
-    private String origin;
+    private int goodId;//商品id
+    private String goodName;//商品名
+    private String price;//价格
+    private String description;//商品描述
+    private boolean freeze;//冻结状态
+    private boolean isPurchased;//购买状态
+    private boolean isOnline;//上架状态
+    private String userid;//出售后购买人id，未出售为空
+    private ArrayList<String> pictures;//商品图片路径列表
+    private String wwhDes;//站长描述
+    private String origin;//商品产地
 
+    //Constructor
     public Good() {
     }
 
-    public Good(int goodId, String goodName, String price, String description, boolean freeze, boolean isPurchased, boolean isOnline, String userid, String wwhDes, String origin) throws SQLException, ClassNotFoundException {
+    public Good(int goodId, String goodName, String price, String description, boolean freeze, boolean isPurchased, boolean isOnline, String userid, String wwhDes, String origin){
         this.goodId = goodId;
         this.goodName = goodName;
         this.price = price;
@@ -34,6 +35,7 @@ public class Good {
         this.origin = origin;
     }
 
+    //Getter and Setter
     public int getGoodId() {
         return goodId;
     }
@@ -55,7 +57,7 @@ public class Good {
     }
 
     public void setPrice(String price) {
-        price = price;
+        this.price = price;
     }
 
     public String getDescription() {
@@ -102,7 +104,7 @@ public class Good {
         return pictures;
     }
 
-    public void setPictures(ArrayList<String> pictures) throws SQLException, ClassNotFoundException {
+    public void setPictures(ArrayList<String> pictures) {
         this.pictures = pictures;
     }
 

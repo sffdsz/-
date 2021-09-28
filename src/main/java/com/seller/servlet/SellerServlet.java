@@ -87,7 +87,6 @@ public class SellerServlet extends HttpServlet {
             else
                 request.getRequestDispatcher("fail.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -144,10 +143,12 @@ public class SellerServlet extends HttpServlet {
             String origin=null;
             String formname=null;
             String formcontent=null;
-            ArrayList<String> goodpicture=null;
+            ArrayList<String> goodpicture=new ArrayList<>();
+            String proPath=null;//当前项目目录
             String oFn=null;//文件名
             String ext=null;//扩展名
             String updir=null;//上传目录
+            File fUpDir=null;//上传目录 文件类型
             String fnf=null;
             String fn=null;
             String df=null;
@@ -171,22 +172,26 @@ public class SellerServlet extends HttpServlet {
                         wwhDes=formcontent;
                     }else if(formname.equals("origin")){
                         origin=formcontent;
+                    }else if(formname.equals("path")){
+                        proPath=formcontent+"\\src\\main\\webapp\\pictures";
                     }
                 }else{
                     oFn=fi.getName();
                     ext=oFn.substring(oFn.lastIndexOf("."));
                     if(ext.equals(".png")||ext.equals(".jpg")){
-                        updir=request.getServletContext().getRealPath("/pictures");//得到图片文件夹相对路径
-                        fnf= UUID.randomUUID().toString();
-                        fn=fnf+ext;
-                        df=updir+"/"+fn;//得到图片绝对路径
-                        goodpicture.add(df);
+                        df = proPath+"\\"+oFn.replace("/","\\");//文件存储在磁盘的路径
+                        updir = df.substring(0,df.lastIndexOf("\\"));
+                        fUpDir = new File(updir);
+                        if(!fUpDir.exists()){
+                            fUpDir.mkdirs();
+                        }
                         try {
                             fi.write(new File(df));
+                            goodpicture.add("pictures/"+oFn);
                         } catch (Exception e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
+                        System.out.println(df);
                     }else{//文件非图片
 
                     }
@@ -198,12 +203,7 @@ public class SellerServlet extends HttpServlet {
             //修改商品图片表
             //gd.()
             request.getRequestDispatcher("setting.jsp").forward(request,response);
-        } catch (FileUploadException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (FileUploadException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -293,7 +293,6 @@ public class SellerServlet extends HttpServlet {
                 assert false;
                 ulist.add(u);
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
