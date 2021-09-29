@@ -273,7 +273,7 @@
                     <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>
                 </tr>
                 <tr>
-                    <td class="t2">图片上传</td><td><input type="file" name="fileupload" class="i1" id="fileupload" webkitdirectory></td>
+                    <td class="t2">图片上传</td><td><input type="file" name="picture" multiple="multiple" /></td>
                 </tr>
             </table>
             <span style="margin-right: 5%"><input class="i2" type="submit" onclick="panDuan()" value="提交"></span><span><input type="reset" value="重置" class="i2"></span>

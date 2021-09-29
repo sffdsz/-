@@ -106,7 +106,7 @@ public class SellerServlet extends HttpServlet {
                 sd.changePwd(sellname,newpwd);
                 se.setSellerpwd(newpwd);
                 hs.setAttribute("seller",se);
-                request.getRequestDispatcher("").forward(request,response);
+                request.getRequestDispatcher("setting.jsp").forward(request,response);
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

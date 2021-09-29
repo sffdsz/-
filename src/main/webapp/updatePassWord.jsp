@@ -199,34 +199,34 @@
 </style>
 <script>
     function panDuan() {
-        var oldpassword = document.getElementById("oldpassword").value;
-        var newpassword = document.getElementById("newpassword").value;
-        var resetpassword = document.getElementById("resetpassword").value;
+        var oldpwd = document.getElementById("oldpwd").value;
+        var newpwd = document.getElementById("newpwd").value;
+        var resetpwd = document.getElementById("resetpwd").value;
         var flag = 1;
-        if (oldpassword == "") {
-            document.getElementById("oldpassword").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("oldpassword").placeholder = "请输入旧密码";
+        if (oldpwd == "") {
+            document.getElementById("oldpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("oldpwd").placeholder = "请输入旧密码";
             flag = 0;
         }
-        if (newpassword == "") {
-            document.getElementById("newpassword").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("newpassword").placeholder = "请输入新密码";
+        if (newpwd == "") {
+            document.getElementById("newpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("newpwd").placeholder = "请输入新密码";
             flag = 0;
         }
-        if (resetpassword == "") {
-            document.getElementById("resetpassword").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("resetpassword").placeholder = "请再次输入新密码";
+        if (resetpwd == "") {
+            document.getElementById("resetpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("resetpwd").placeholder = "请再次输入新密码";
             flag = 0;
         }
-        if (newpassword != resetpassword) {
-            document.getElementById("resetpassword").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("resetpassword").value = "";
-            document.getElementById("resetpassword").placeholder = "请输入一致的密码";
+        if (newpwd != resetpwd) {
+            document.getElementById("resetpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("resetpwd").value = "";
+            document.getElementById("resetpwd").placeholder = "请输入一致的密码";
             flag = 0;
         }
         if (flag == 1) {
             alert("提交成功！");
-            location.href = "./setting.jsp"
+            location.href = "SellerServlet?method=changePwd&oldpwd=" + oldpwd + "&newpwd=" + newpwd;
         }
     }
 </script>
@@ -250,13 +250,13 @@
             </div>
             <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
                 <tr>
-                    <td class="t2" width="30%">旧密码</td><td width="70%"><input type="password" name="oldpassword" class="i1" id="oldpassword"></td>
+                    <td class="t2" width="30%">旧密码</td><td width="70%"><input type="password" name="oldpwd" class="i1" id="oldpwd"></td>
                 </tr>
                 <tr>
-                    <td class="t2">新密码</td><td><input type="password" name="newpassword" class="i1" id="newpassword"></td>
+                    <td class="t2">新密码</td><td><input type="password" name="newpwd" class="i1" id="newpwd"></td>
                 </tr>
                 <tr>
-                    <td class="t2" >确认密码</td><td><input type="password" name="resetpassword" class="i1" id="resetpassword"></td>
+                    <td class="t2" >确认密码</td><td><input type="password" name="resetpwd" class="i1" id="resetpwd"></td>
                 </tr>
             </table>
             <span style="margin-right: 5%"><button class="bt1" type="button" onclick="panDuan()">提交</button></span><span><input type="reset" value="重置" class="i2"></span>
