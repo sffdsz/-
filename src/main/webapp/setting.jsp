@@ -140,7 +140,7 @@
     </table>
 </div>
 <div style="position: absolute; top: 3px; left: 10px">
-    <div style="font-size: x-large; font-family: 'Microsoft Himalaya'; font-style: inherit; color: white">管理员${sessionScope.seller.sellerName},欢迎您！</div>
+    <div style="font-size: x-large; font-family: 'Microsoft Himalaya'; font-style: inherit; color: white">管理员${sessionScope.seller.sellername}，欢迎您！</div>
     <a href="./updatePassWord.jsp" style="text-decoration: none"><div style="font-size: small; font-family: 'Microsoft Himalaya'; font-style: italic; color: white">修改密码</div></a>
 </div>
 </body>

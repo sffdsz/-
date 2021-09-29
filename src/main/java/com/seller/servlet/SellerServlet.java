@@ -127,7 +127,7 @@ public class SellerServlet extends HttpServlet {
         try {
             glist=gd.viewHisGood();
             request.setAttribute("hisgoodlist",glist);
-            request.getRequestDispatcher("........").forward(request,response);
+            request.getRequestDispatcher("history.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

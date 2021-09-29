@@ -45,7 +45,6 @@
         height: 10%;
         top: 0;
         background-color: #037bd2;
-        margin-left: 1%;
     }
     #title{
         font-size: xxx-large;
@@ -199,6 +198,9 @@
         font-style: inherit;
         font-size: large;
     }
+    input-file {
+
+    }
 </style>
 <script>
     function panDuan() {
@@ -230,7 +232,11 @@
 <body style="text-align: center; background-image: url(pictures/background.png)">
 <%
     String path = application.getRealPath("upload.jsp");
-    path = path.substring(0,path.indexOf("\\out"));
+    if (path.indexOf("\\out") > 0) {
+        path = path.substring(0,path.indexOf("\\out"));
+    } else {
+        path = path.substring(0,path.indexOf("\\target"));
+    }
 %>
 <div class="navbar11 navbar-inverse">
     <table class="title">

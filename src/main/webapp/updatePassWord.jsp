@@ -234,10 +234,11 @@
 <div class="navbar navbar-inverse">
     <table class="title">
         <tr id="title_tr" align="center">
-            <td width="60%" align="center"><a href="./home1.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="./home1.jsp" class="astyle">商品列表</a></td>
-            <td width="10%" class="title_td"><a class="astyle" onclick="dianji()">商品状态</a></td>
-            <td width="10%" class="title_td"><a href="" class="astyle">商家登录</a></td>
+            <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
+            <td width="10%" class="title_td"><a href=upload.jsp" class="astyle">发布商品</a></td>
+            <td width="10%" class="title_td"><a href="SellerServlet?method=viewHisGoods" class="astyle">历史商品</a></td>
+            <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
+            <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
         </tr>
     </table>
 </div>
