@@ -212,11 +212,11 @@ public class SellerServlet extends HttpServlet {
         //得到商品属性
         //冻结商品
         //跳回卖家界面
-        int goodid=Integer.parseInt(request.getParameter("goodid").toString());
+        int goodid=Integer.parseInt(request.getParameter("goodid"));
         GoodDao gd=new GoodImpl();
         try {
             gd.freezeGood(goodid);
-            request.getRequestDispatcher("........").forward(request,response);
+            request.getRequestDispatcher("frozenGoods.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

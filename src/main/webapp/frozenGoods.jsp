@@ -49,6 +49,7 @@
         top: 0;
         background-color: #037bd2;
         margin-left: 1%;
+        vertical-align: middle;
     }
     #title{
         font-size: xxx-large;
@@ -158,7 +159,17 @@
     }
 </style>
 <script>
+    function unFrozen(id) {
+        location.href = "SellerServlet?method=goodBackOnline&goodid=" + id;
+    }
 
+    function frozen(id) {
+        location.href = "SellerServlet?method=freezeGood&goodid=" + id;
+    }
+    function down(id) {
+        // location.href = "SellerServlet?method=freezeGood&goodid=" + id;
+        location.href = "setting.jsp"
+    }
 </script>
 <body style="background-image: url(pictures/background.png)">
 <div class="navbar11 navbar-inverse">
@@ -184,10 +195,10 @@
                     <c:forEach items="${sessionScope.gls}" var="c" varStatus="s">
                         <tr style="margin: 0 auto">
                             <td><img src="${pageContext.request.contextPath}/${sessionScope.pictures.get(0)}"></td><td>${c.goodId}</td><td>${c.goodName}</td>
-                            <td>
-                                <span><a><button class="but1">解除冻结</button></a></span>
-                                &nbsp;&nbsp;&nbsp;
-                                <span><a><button class="but1">下架商品</button></a></span>
+                            <td style="border-spacing: 2px">
+                                <span><button class="but1" type="button" onclick="unFrozen('${c.goodId}')">解除冻结</button></span>
+                                <span><button class="but1" type="button" onclick="frozen('${c.goodId}')">冻结</button></span>
+                                <span><button class="but1" type="button" onclick="down('${c.goodId}')">下架商品</button></span>
                             </td>
                         </tr>
                     </c:forEach>

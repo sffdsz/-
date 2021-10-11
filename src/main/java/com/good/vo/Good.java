@@ -17,7 +17,7 @@ public class Good {
     private ArrayList<String> pictures;//商品图片路径列表
     private String wwhDes;//站长描述
     private String origin;//商品产地
-
+    private int index;//商品索引
     //Constructor
     public Good() {
     }
@@ -122,5 +122,13 @@ public class Good {
 
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

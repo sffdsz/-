@@ -211,7 +211,7 @@
             <div id="d1" class="dh" onclick="document.getElementById('w1').style.display='block';
             document.getElementById('w2').style.display='none'; document.getElementById('w3').style.display='none';
             document.getElementById('d1').style.background='#2e6da4'; document.getElementById('d2').style.background='#9acfea';
-            document.getElementById('d3').style.background='#9acfea';"; style="background: #2e6da4">商品简介</div>
+            document.getElementById('d3').style.background='#9acfea';"; style="background: #2e6da4;">商品简介</div>
             <div id="d2" class="dh" onclick="document.getElementById('w2').style.display='block';
             document.getElementById('w1').style.display='none'; document.getElementById('w3').style.display='none';
             document.getElementById('d1').style.background='#9acfea'; document.getElementById('d2').style.background='#2e6da4';
