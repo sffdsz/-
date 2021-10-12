@@ -126,7 +126,8 @@ public class SellerServlet extends HttpServlet {
         GoodDao gd=new GoodImpl();
         try {
             glist=gd.viewHisGood();
-            request.setAttribute("hisgoodlist",glist);
+            HttpSession hs = request.getSession();
+            hs.setAttribute("hisgoodlist",glist);
             request.getRequestDispatcher("history.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -177,10 +177,10 @@
                 <th>商品图</th><th>商品ID</th><th>商品名</th><th>购买用户</th>
             </tr>
             <c:choose>
-                <c:when test="${not empty requestScope.hisgoodlist}">
-                    <c:forEach items="${requestScope.hisgoodlist}" var="c" varStatus="s">
+                <c:when test="${not empty sessionScope.hisgoodlist}">
+                    <c:forEach items="${sessionScope.hisgoodlist}" var="c" varStatus="s">
                         <tr style="margin: 0 auto">
-                            <td><img src="${pageContext.request.contextPath}/pictures/${c.pictures}"></td><td>${c.goodId}</td><td>${c.goodName}</td>
+                            <td><img src="${pageContext.request.contextPath}/${c.pictures.get(0)}"></td><td>${c.goodId}</td><td>${c.goodName}</td>
                         </tr>
                     </c:forEach>
                 </c:when>

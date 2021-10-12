@@ -192,6 +192,14 @@
             document.getElementById((0).toString()).style.boxShadow = "none";
         }
     }
+
+    function dianji(x) {
+        if (x == "true") {
+            alert("商品已冻结");
+        } else {
+            alert("商品正在出售");
+        }
+    }
 </script>
 <body style="background-image: url(pictures/background.png);">
 <input type="hidden" value="${pageContext.request.contextPath}/pictures/" id="src">
@@ -200,7 +208,7 @@
         <tr id="title_tr" align="center">
             <td width="60%" align="center"><a href="GoodServlet" id="titleText">在 线 购 物 系 统</a></td>
             <td width="10%" class="title_td"><a href="GoodServlet" class="astyle">商品列表</a></td>
-            <td width="10%" class="title_td"><a class="astyle" onclick="dianji()">商品状态</a></td>
+            <td width="10%" class="title_td"><a class="astyle" onclick="dianji('${sessionScope.good.freeze}')">商品状态</a></td>
             <td width="10%" class="title_td"><a href="./sign_in.jsp" class="astyle">商家登录</a></td>
         </tr>
     </table>

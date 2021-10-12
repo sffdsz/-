@@ -119,9 +119,11 @@ public class GoodImpl implements GoodDao{
             ResultSet rs2 = pstmt2.executeQuery();
             while(rs2.next()){
                 pictures.add(rs2.getString("picture"));
+                System.out.println(rs2.getString("picture"));
             }
             rs2.close();
             pstmt2.close();
+            g.setPictures(pictures);
             gls.add(g);
         }
         pstmt.close();
@@ -166,6 +168,11 @@ public class GoodImpl implements GoodDao{
         pstmt1.setInt(2,goodid);
         pstmt1.execute();
         pstmt1.close();
+        String sql2 = "delete from transaction where goodid = ?";
+        PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+        pstmt2.setInt(1,goodid);
+        pstmt2.execute();
+        pstmt2.close();
         conn.close();
     }
 }
