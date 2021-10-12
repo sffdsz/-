@@ -155,8 +155,8 @@
             <th>用户ID</th><th>姓名</th><th>地址</th><th>出价</th><th>操作</th>
         </tr>
         <c:choose>
-            <c:when test="${not empty requestScope.userlist}">
-                <c:forEach items="${requestScope.userlist}" var="c" varStatus="s">
+            <c:when test="${not empty sessionScope.userlist}">
+                <c:forEach items="${sessionScope.userlist}" var="c" varStatus="s">
                     <tr style="margin-top: 50%">
                         <td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td><td><input type="button" value="出售" class="cs" onclick="buy('${c.userid}', '${sessionScope.good.goodId}')"></td>
                     </tr>

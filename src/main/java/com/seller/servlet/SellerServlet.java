@@ -239,6 +239,10 @@ public class SellerServlet extends HttpServlet {
             gd.freezeGood(goodid);
             sd.transactionFreezeGood(goodid,userid);
             //用户与商品绑定
+            List<Good> gls = gd.getGoods();
+            HttpSession hs = request.getSession();
+            hs.setAttribute("good",gls.get(0));
+            hs.setAttribute("gls",gls);
             request.getRequestDispatcher("customBuy.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -300,7 +304,7 @@ public class SellerServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
-        request.setAttribute("userlist",ulist);
+        hs.setAttribute("userlist",ulist);
         request.getRequestDispatcher("customBuy.jsp").forward(request,response);
     }
 }
