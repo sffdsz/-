@@ -205,7 +205,6 @@
         </tr>
     </table>
 </div>
-
 <form action="information.jsp" method="post">
     <div class="bd">
         <div style="width: 10%; height: 100%; background: #9acfea; float: left">
