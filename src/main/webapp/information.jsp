@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>填写信息</title>
 </head>
 <style>
     .navbar {
@@ -240,7 +240,7 @@
 </div>
 <div style="margin: 0 auto; width: 50%; margin-top: 10%">
     <form action="" method="post">
-        <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
+        <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
             <div>
                 <span style="font-size: xxx-large; color: whitesmoke; text-align: center">购物信息录入</span>
             </div>

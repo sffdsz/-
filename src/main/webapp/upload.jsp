@@ -13,14 +13,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>上传商品</title>
 </head>
 <style>
-    .navbar {
+    .navbar11 {
+        margin: 0 auto;
         margin-bottom: 0;
         position: fixed;
-        left: 0;
-        right: 0;
+        left: 15px;
+        right: 15px;
         z-index: 9999;
     }
     .sidebar {
@@ -41,8 +42,9 @@
 
     table.title{
         position: fixed;
-        width: 100%;
+        width: 98%;
         height: 10%;
+        margin: 0 auto;
         top: 0;
         background-color: #037bd2;
     }
@@ -252,7 +254,7 @@
 <div style="margin: 0 auto; width: 50%; margin-top: 7%">
     <form action="SellerServlet?method=releaseGood" method="post" enctype="multipart/form-data">
         <input type="hidden" value="<%=path%>" name="path" style="position: absolute">
-        <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
+        <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
             <div>
                 <span style="font-size: xxx-large; color: whitesmoke; text-align: center">发布商品</span>
             </div>

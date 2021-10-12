@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JSP - Hello World</title>
+  <title>商家登录</title>
 </head>
 <style>
   .navbar {
@@ -196,6 +196,12 @@
     font-style: inherit;
     font-size: large;
   }
+
+  .s1 {
+    cursor: pointer;
+    display: table-cell;
+    vertical-align: middle;
+  }
 </style>
 <script>
   function panDuan() {
@@ -217,11 +223,19 @@
       location.href = "SellerServlet?method=login&sellername=" + sellername + "&sellerpwd=" + sellerpwd;
     }
   }
+
+  function back() {
+    location.href = "home1.jsp";
+  }
 </script>
 <body style="text-align: center; background-image: url(pictures/background.png)">
+<div style="position: absolute; z-index: 9999; top: 1%; left: 1%; display: table; vertical-align: middle" onclick="back()">
+  <span class="s1"><img src="pictures/ll.png" style="width: 40px; height: 40px"></span>
+  <span class="s1" style="color: white; font-size: xx-large; font-family: 'Microsoft Himalaya'">返回</span>
+</div>
 <div style="margin: 0 auto; width: 50%; margin-top: 10%">
   <form action="SellerServlet?method=login" method="post">
-    <div style="border: 5px #e4b9c0; border-radius: 10%; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
+    <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
       <div>
         <span style="font-size: xxx-large; color: whitesmoke; text-align: center">商家登录</span>
       </div>

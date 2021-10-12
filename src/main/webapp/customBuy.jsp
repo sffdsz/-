@@ -6,15 +6,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>购买人信息</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 <style>
     .navbar11 {
+        margin: 0 auto;
         margin-bottom: 0;
         position: fixed;
-        left: 0;
-        right: 0;
+        left: 15px;
+        right: 15px;
         z-index: 9999;
     }
     .sidebar {
@@ -35,11 +36,11 @@
 
     table.title1{
         position: fixed;
-        width: 100%;
+        width: 98%;
         height: 10%;
+        margin: 0 auto;
         top: 0;
         background-color: #037bd2;
-        margin-left: 1%;
     }
     button.title_button{
         background-color: #037bd2;
@@ -140,7 +141,7 @@
     </table>
 </div>
 <%--style="margin: 0 auto; border-spacing: 40px 40px"--%>
-<div style="margin: 0 auto; margin-top: 10%; width: 60%; border: 5px #e4b9c0; border-radius: 5%; border-style: solid; background: white;
+<div style="margin: 0 auto; margin-top: 10%; width: 60%; border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: white;
     padding-top: 5%; padding-left: 5%; padding-right: 5%; padding-bottom: 5%">
     <table class="table table-hover">
         <tr>

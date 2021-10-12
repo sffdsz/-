@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: jtwu
-  Date: 2021/9/21
-  Time: 16:04
+  Date: 2021/10/12
+  Time: 10:48
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>修改密码</title>
+    <title>商家登录</title>
 </head>
 <style>
     .navbar {
@@ -39,11 +39,11 @@
 
     table.title{
         position: fixed;
-        width: 98%;
+        width: 100%;
         height: 10%;
-        margin: 0 auto;
         top: 0;
         background-color: #037bd2;
+        margin-left: 1%;
     }
     #title{
         font-size: xxx-large;
@@ -197,76 +197,50 @@
         font-style: inherit;
         font-size: large;
     }
+
+    .s1 {
+        cursor: pointer;
+        display: table-cell;
+        vertical-align: middle;
+    }
 </style>
 <script>
     function panDuan() {
-        var realpwd = document.getElementById("realpwd").value;
-        var oldpwd = document.getElementById("oldpwd").value;
-        var newpwd = document.getElementById("newpwd").value;
-        var resetpwd = document.getElementById("resetpwd").value;
+        var sellername = document.getElementById("sellername").value;
+        var sellerpwd = document.getElementById("sellerpwd").value;
         var flag = 1;
-        if (oldpwd == "") {
-            document.getElementById("oldpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("oldpwd").placeholder = "请输入旧密码";
-            flag = 0;
-        } else if (oldpwd != realpwd) {
-            document.getElementById("oldpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("oldpwd").value = "";
-            document.getElementById("oldpwd").placeholder = "密码错误";
+        if (sellername == "") {
+            document.getElementById("sellername").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("sellername").placeholder = "请输入用户名";
             flag = 0;
         }
-        if (newpwd == "") {
-            document.getElementById("newpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("newpwd").placeholder = "请输入新密码";
-            flag = 0;
-        }
-        if (resetpwd == "") {
-            document.getElementById("resetpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("resetpwd").placeholder = "请再次输入新密码";
-            flag = 0;
-        }else if (newpwd != resetpwd) {
-            document.getElementById("resetpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("resetpwd").value = "";
-            document.getElementById("resetpwd").placeholder = "请输入一致的密码";
+        if (sellerpwd == "") {
+            document.getElementById("sellerpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("sellerpwd").placeholder = "请输入密码";
             flag = 0;
         }
         if (flag == 1) {
-            alert("提交成功！");
-            location.href = "SellerServlet?method=changePwd&oldpwd=" + oldpwd + "&newpwd=" + newpwd;
+            //alert("登录成功！");
+            location.href = "SellerServlet?method=login&sellername=" + sellername + "&sellerpwd=" + sellerpwd;
         }
+    }
+
+    function back() {
+        location.href = "sign_in.jsp";
     }
 </script>
 <body style="text-align: center; background-image: url(pictures/background.png)">
-<input type="hidden" value="${sessionScope.seller.sellerpwd}" id="realpwd">
-<div class="navbar navbar-inverse">
-    <table class="title">
-        <tr id="title_tr" align="center">
-            <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="upload.jsp" class="astyle">发布商品</a></td>
-            <td width="10%" class="title_td"><a href="SellerServlet?method=viewHisGoods" class="astyle">历史商品</a></td>
-            <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
-            <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
-        </tr>
-    </table>
+<div style="position: absolute; z-index: 9999; top: 1%; left: 1%; display: table; vertical-align: middle" onclick="back()">
+    <span class="s1"><img src="pictures/ll.png" style="width: 40px; height: 40px"></span>
+    <span class="s1" style="color: white; font-size: xx-large; font-family: 'Microsoft Himalaya'">返回</span>
 </div>
-<div style="margin: 0 auto; width: 50%; margin-top: 7%">
-    <form action="" method="post">
-        <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
-            <div>
-                <span style="font-size: xxx-large; color: whitesmoke; text-align: center">修改密码</span>
+<div style="margin: 0 auto; width: 50%; margin-top: 10%">
+    <form action="SellerServlet?method=login" method="post">
+        <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: white; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
+            <div style="display: table; margin: 0 auto; text-align: center">
+                <span style="vertical-align: middle; display: table-cell; color: red; font-family: 'Microsoft Himalaya'; font-size: xxx-large">登录失败</span>
+                <span style="display: table-cell; vertical-align: middle"><img src="pictures/哭脸.png" style="width: 60px; height: 60px"></span>
             </div>
-            <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
-                <tr>
-                    <td class="t2" width="30%">旧密码</td><td width="70%"><input type="password" name="oldpwd" class="i1" id="oldpwd"></td>
-                </tr>
-                <tr>
-                    <td class="t2">新密码</td><td><input type="password" name="newpwd" class="i1" id="newpwd"></td>
-                </tr>
-                <tr>
-                    <td class="t2" >确认密码</td><td><input type="password" name="resetpwd" class="i1" id="resetpwd"></td>
-                </tr>
-            </table>
-            <span style="margin-right: 5%"><button class="bt1" type="button" onclick="panDuan()">提交</button></span><span><input type="reset" value="重置" class="i2"></span>
         </div>
     </form>
 </div>

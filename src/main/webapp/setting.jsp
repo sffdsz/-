@@ -102,7 +102,7 @@
         margin: 0 auto;
         /*background: #037bd2;*/
         max-width: 60%;
-        height: 200px;
+        height: 210px;
     }
     .sp1:hover {
         transform: scale(1.2);
@@ -142,6 +142,7 @@
 <div style="position: absolute; top: 3px; left: 10px">
     <div style="font-size: x-large; font-family: 'Microsoft Himalaya'; font-style: inherit; color: white">管理员${sessionScope.seller.sellername}，欢迎您！</div>
     <a href="./updatePassWord.jsp" style="text-decoration: none"><div style="font-size: small; font-family: 'Microsoft Himalaya'; font-style: italic; color: white">修改密码</div></a>
+    <a href="./home1.jsp" style="text-decoration: none"><div style="font-size: small; font-family: 'Microsoft Himalaya'; font-style: italic; color: white; float: left">退出登录</div></a>
 </div>
 </body>
 </html>
