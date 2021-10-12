@@ -199,7 +199,7 @@
                             <td style="border-spacing: 2px">
                                 <span><button class="but1" type="button" onclick="unFrozen('${c.goodId}')">解除冻结</button></span>
                                 <span><button class="but1" type="button" onclick="frozen('${c.goodId}')">冻结</button></span>
-                                <span><button class="but1" type="button" onclick="down('${c.goodId}')">下架商品</button></span>
+<%--                                <span><button class="but1" type="button" onclick="down('${c.goodId}')">下架商品</button></span>--%>
                             </td>
                         </tr>
                     </c:forEach>

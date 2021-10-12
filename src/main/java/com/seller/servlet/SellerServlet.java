@@ -216,6 +216,10 @@ public class SellerServlet extends HttpServlet {
         GoodDao gd=new GoodImpl();
         try {
             gd.freezeGood(goodid);
+            List<Good> gls = gd.getGoods();
+            HttpSession hs = request.getSession();
+            hs.setAttribute("good",gls.get(0));
+            hs.setAttribute("gls",gls);
             request.getRequestDispatcher("frozenGoods.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -235,7 +239,7 @@ public class SellerServlet extends HttpServlet {
             gd.freezeGood(goodid);
             sd.transactionFreezeGood(goodid,userid);
             //用户与商品绑定
-            request.getRequestDispatcher("........").forward(request,response);
+            request.getRequestDispatcher("customBuy.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

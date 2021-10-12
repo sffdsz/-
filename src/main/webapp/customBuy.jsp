@@ -126,7 +126,13 @@
     }
 </style>
 <script>
+    function buy(uid, gid) {
+        location.href = "SellerServlet?method=transaction&goodid=" + gid + "&userid=" + uid;
+    }
 
+    function success(gid) {
+        location.href = "SellerServlet?method=transactionSuccess&goodid=" + gid;
+    }
 </script>
 <body style="background-image: url(pictures/background.png)">
 <div class="navbar11 navbar-inverse">
@@ -143,7 +149,8 @@
 <%--style="margin: 0 auto; border-spacing: 40px 40px"--%>
 <div style="margin: 0 auto; margin-top: 10%; width: 60%; border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: white;
     padding-top: 5%; padding-left: 5%; padding-right: 5%; padding-bottom: 5%">
-    <table class="table table-hover">
+    <div style="width: 100%; height: 50px"><input type="button" value="交易成功" class="cs" onclick="success('${sessionScope.good.goodId}')" style="float: right"></div>
+    <table class="table table-hover" style="margin-top: 5px">
         <tr>
             <th>用户ID</th><th>姓名</th><th>地址</th><th>出价</th><th>操作</th>
         </tr>
@@ -151,13 +158,13 @@
             <c:when test="${not empty requestScope.userlist}">
                 <c:forEach items="${requestScope.userlist}" var="c" varStatus="s">
                     <tr style="margin-top: 50%">
-                        <td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td><td><input type="submit" value="出售" class="cs"></td>
+                        <td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td><td><input type="button" value="出售" class="cs" onclick="buy('${c.userid}', '${sessionScope.good.goodId}')"></td>
                     </tr>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <tr>
-                    <td colspan="4">没有购买人信息</td>
+                    <td colspan="5">没有购买人信息</td>
                 </tr>
             </c:otherwise>
         </c:choose>
