@@ -1,0 +1,6 @@
+index,oldpwd,newpwd
+1,123456,1
+2,1,abc
+3,abc,0000,
+4,0000,a0bjA
+5,a0bjA,123456
