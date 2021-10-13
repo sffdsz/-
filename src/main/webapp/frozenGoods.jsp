@@ -194,7 +194,7 @@
                 <c:when test="${not empty sessionScope.gls}">
                     <c:forEach items="${sessionScope.gls}" var="c" varStatus="s">
                         <tr style="margin: 0 auto">
-                            <td><img src="${pageContext.request.contextPath}/${sessionScope.pictures.get(0)}"></td><td>${c.goodId}</td><td>${c.goodName}</td>
+                            <td><img src="${pageContext.request.contextPath}/${c.pictures.get(0)}"></td><td>${c.goodId}</td><td>${c.goodName}</td>
                             <td>${c.freeze?"冻结":"在售"}</td>
                             <td style="border-spacing: 2px">
                                 <span><button class="but1" type="button" onclick="unFrozen('${c.goodId}')">解除冻结</button></span>

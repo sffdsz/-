@@ -158,6 +158,7 @@ public class SellerServlet extends HttpServlet {
             List<FileItem> items=upload.parseRequest(request);
             Iterator<FileItem> fiIter=items.iterator();
             FileItem fi=null;
+            Boolean flag=true;
             while(fiIter.hasNext()){
                 fi=fiIter.next();
                 if(fi.isFormField()){
@@ -165,19 +166,47 @@ public class SellerServlet extends HttpServlet {
                     formcontent=fi.getString("utf-8");
                     if(formname.equals("goodname")){
                         goodname=formcontent;
+                        if(goodname.equals("")){
+                            flag=false;
+                            break;
+                        }
                     }else if(formname.equals("description")){
                         description=formcontent;
+                        if(description.equals("")){
+                            flag=false;
+                            break;
+                        }
                     }else if(formname.equals("goodprice")){
                         goodprice=formcontent;
+                        if(goodprice.equals("")){
+                            flag=false;
+                            break;
+                        }
                     }else if(formname.equals("wwhDes")){
                         wwhDes=formcontent;
+                        if(wwhDes.equals("")){
+                            flag=false;
+                            break;
+                        }
                     }else if(formname.equals("origin")){
                         origin=formcontent;
+                        if(origin.equals("")){
+                            flag=false;
+                            break;
+                        }
                     }else if(formname.equals("path")){
                         proPath=formcontent+"\\src\\main\\webapp\\pictures";
+                        if(proPath.equals("")){
+                            flag=false;
+                            break;
+                        }
                     }
                 }else{
                     oFn=fi.getName();
+                    if(oFn.equals("")){
+                        flag=false;
+                        break;
+                    }
                     ext=oFn.substring(oFn.lastIndexOf("."));
                     if(ext.equals(".png")||ext.equals(".jpg")){
                         df = proPath+"\\"+oFn.replace("/","\\");//文件存储在磁盘的路径
@@ -199,11 +228,19 @@ public class SellerServlet extends HttpServlet {
                 }
             }
             //修改商品表
-            GoodDao gd= new GoodImpl();
-            gd.releaseGood(goodname,goodprice,description,goodpicture,wwhDes,origin);
-            //修改商品图片表
-            //gd.()
-            request.getRequestDispatcher("setting.jsp").forward(request,response);
+            if(flag==false){
+                request.getRequestDispatcher("upload.jsp").forward(request,response);
+            }else {
+                GoodDao gd= new GoodImpl();
+                gd.releaseGood(goodname,goodprice,description,goodpicture,wwhDes,origin);
+                ArrayList<Good> gls=new ArrayList<>();
+                gls=gd.getGoods();
+                HttpSession hs=request.getSession();
+                hs.setAttribute("gls",gls);
+                //修改商品图片表
+                //gd.()
+                request.getRequestDispatcher("setting.jsp").forward(request,response);
+            }
         } catch (FileUploadException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
