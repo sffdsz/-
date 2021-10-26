@@ -14,7 +14,7 @@
  Date: 27/09/2021 14:38:00
 */
 
-SET NAMES utf8mb4;
+SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
@@ -23,17 +23,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `good`;
 CREATE TABLE `good`  (
   `goodid` int(0) NOT NULL AUTO_INCREMENT,
-  `goodname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `goodname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `price` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `freeze` tinyint(1) NOT NULL,
   `ispurchased` tinyint(1) NOT NULL,
   `isonline` tinyint(1) NOT NULL,
-  `userid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `wwhdes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `origin` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `wwhdes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `origin` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`goodid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of good
@@ -47,9 +47,9 @@ DROP TABLE IF EXISTS `goodpicture`;
 CREATE TABLE `goodpicture`  (
   `pictureid` int(0) NOT NULL AUTO_INCREMENT,
   `goodid` int(0) NOT NULL,
-  `picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `picture` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`pictureid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of goodpicture
@@ -64,10 +64,10 @@ INSERT INTO `goodpicture` VALUES (4, 1, 'pictures/mg.png');
 -- ----------------------------
 DROP TABLE IF EXISTS `seller`;
 CREATE TABLE `seller`  (
-  `sellername` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `sellerpwd` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sellername` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `sellerpwd` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`sellername`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of seller
@@ -83,7 +83,7 @@ CREATE TABLE `transaction`  (
   `userid` int(0) NOT NULL,
   `ischosen` tinyint(1) NOT NULL,
   PRIMARY KEY (`goodid`, `userid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transaction
@@ -96,11 +96,11 @@ INSERT INTO `transaction` VALUES (1, 1, 0);
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `userid` int(0) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `userphone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `transactionaddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `userphone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `transactionaddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`userid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user

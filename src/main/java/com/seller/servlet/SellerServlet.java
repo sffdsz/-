@@ -17,10 +17,7 @@ import com.seller.vo.Seller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +39,7 @@ public class SellerServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method=request.getParameter("method");
+        System.out.println(1);
         if(method.equals("login")){
             login(request,response);
         }else if(method.equals("changePwd")){
@@ -122,13 +120,14 @@ public class SellerServlet extends HttpServlet {
     }
 
     protected void viewHisGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<Good> glist=null;
+        Map<Good,String> glist=null;
         GoodDao gd=new GoodImpl();
         try {
             glist=gd.viewHisGood();
             HttpSession hs = request.getSession();
             hs.setAttribute("hisgoodlist",glist);
             request.getRequestDispatcher("history.jsp").forward(request,response);
+//            viewHisGoodsChangeIndex(request, response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -258,7 +257,8 @@ public class SellerServlet extends HttpServlet {
             HttpSession hs = request.getSession();
             hs.setAttribute("good",gls.get(0));
             hs.setAttribute("gls",gls);
-            request.getRequestDispatcher("frozenGoods.jsp").forward(request,response);
+            request.getRequestDispatcher("frozenGoods.jsp").forward(request, response);
+//            freezeGoodIndexChange(request, response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -281,6 +281,7 @@ public class SellerServlet extends HttpServlet {
             HttpSession hs = request.getSession();
             hs.setAttribute("good",gls.get(0));
             hs.setAttribute("gls",gls);
+//            viewBuyerInfoChangeIndex(request, response);
             request.getRequestDispatcher("customBuy.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -297,6 +298,7 @@ public class SellerServlet extends HttpServlet {
             HttpSession hs = request.getSession();
             hs.setAttribute("good",gls.get(0));
             hs.setAttribute("gls",gls);
+//            freezeGoodIndexChange(request, response);
             request.getRequestDispatcher("frozenGoods.jsp").forward(request,response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -343,6 +345,87 @@ public class SellerServlet extends HttpServlet {
             }
         }
         hs.setAttribute("userlist",ulist);
+//        hs.removeAttribute("userlist");
+//        viewBuyerInfoChangeIndex(request, response);
         request.getRequestDispatcher("customBuy.jsp").forward(request,response);
     }
+//    protected void freezeGoodIndexChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
+//        int index = Integer.parseInt(request.getParameter("index"));
+//        HttpSession hs = request.getSession();
+//        GoodDao gd = new GoodImpl();
+//        List<Good> gls = gd.getGoods();
+//        List<Good> flist = new ArrayList<>();
+//        int count = gls.size() / 3;
+//        if (gls.size() % 3 != 0) {
+//            count += 1;
+//        }
+//        if (gls.size() < index * 3) {
+//            for (int i = (index - 1) * 3; i < gls.size(); i ++) {
+//                assert false;
+//                flist.add(gls.get(i));
+//            }
+//        } else {
+//            for (int i = (index - 1) * 3; i < index * 3; i ++) {
+//                assert false;
+//                flist.add(gls.get(i));
+//            }
+//        }
+//        request.setAttribute("flist", flist);
+//        request.setAttribute("count", count);
+//        request.setAttribute("index", index);
+//        request.getRequestDispatcher("frozenGoods.jsp").forward(request, response);
+//    }
+//
+//    protected void viewBuyerInfoChangeIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        int index = Integer.parseInt(request.getParameter("index"));
+//        HttpSession hs = request.getSession();
+//        GoodDao gd = new GoodImpl();
+//        ArrayList<User> ulist = (ArrayList<User>) hs.getAttribute("userlist");
+//        List<User> clist = new ArrayList<>();
+//        int count = ulist.size() / 6;
+//        if (ulist.size() % 6 != 0) {
+//            count += 1;
+//        }
+//        if (ulist.size() < index * 6) {
+//            for (int i = (index - 1) * 6; i < ulist.size(); i ++) {
+//                assert false;
+//                clist.add(ulist.get(i));
+//            }
+//        } else {
+//            for (int i = (index - 1) * 6; i < index * 6; i ++) {
+//                assert false;
+//                clist.add(ulist.get(i));
+//            }
+//        }
+//        request.setAttribute("clist", clist);
+//        request.setAttribute("count", count);
+//        request.setAttribute("index", index);
+//        request.getRequestDispatcher("customBuy.jsp").forward(request, response);
+//    }
+
+//    protected void viewHisGoodsChangeIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        int index = Integer.parseInt(request.getParameter("index"));
+//        HttpSession hs = request.getSession();
+//        Map<Good, String> glist = (Map<Good, String>) hs.getAttribute("hisgoodlist");
+//        Map<Good, String> hlist = new HashMap<>();
+//        int count = glist.size() / 3;
+//        if (glist.size() % 3 != 0) {
+//            count += 1;
+//        }
+//        if (glist.size() < index * 3) {
+//            for (int i = (index - 1) * 3; i < glist.size(); i ++) {
+//                assert false;
+//                hlist.put(glist.get(i));
+//            }
+//        } else {
+//            for (int i = (index - 1) * 3; i < index * 3; i ++) {
+//                assert false;
+//                hlist.add(glist.get(i));
+//            }
+//        }
+//        request.setAttribute("hlist", hlist);
+//        request.setAttribute("count", count);
+//        request.setAttribute("index", index);
+//        request.getRequestDispatcher("history.jsp").forward(request, response);
+//    }
 }

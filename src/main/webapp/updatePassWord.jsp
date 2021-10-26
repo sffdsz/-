@@ -235,41 +235,105 @@
             location.href = "SellerServlet?method=changePwd&oldpwd=" + oldpwd + "&newpwd=" + newpwd;
         }
     }
+
+    function alert(data) {
+        var div = document.createElement("div");
+        var p = document.createElement("p");
+        var img = document.createElement("img");
+        var btu = document.createElement("button");
+        var text = document.createTextNode(data?data:"");
+        var btuTest = document.createTextNode("确定");
+        var imgPath = "pictures/勾选.png";
+
+        p.appendChild(text);
+        btu.appendChild(btuTest);
+        img.src = imgPath;
+        div.appendChild(img);
+        div.appendChild(p);
+        div.appendChild(btu);
+        document.getElementsByTagName("body")[0].appendChild(div);
+        btu.onclick = function () {
+            div.parentNode.removeChild(div);
+        }
+        css(btu, {
+            'margin': '0 auto',
+            'background-color': '#4CAF50',
+            'border': 'none',
+            'color': 'white',
+            'margin-top': '5%',
+            'padding': '5px 10px',
+            'text-decoration': 'none',
+            'display': 'inline-block',
+            'font-size': '16px',
+            'border-radius': '5px'
+        })
+        css(div, {
+            'top': '30%',
+            'left': '40%',
+            'background': 'white',
+            'position': 'fixed',
+            'margin': '0 auto',
+            'width': '400px',
+            'text-align': 'center',
+            'height': '250px',
+            'border-radius': '20px'
+        })
+        css(img, {
+            'width': '100px',
+            'height': '100px',
+        })
+        css(img, {
+            'margin-top': '20px'
+        })
+    }
+
+    function css(target, cssList) {
+        var str = target.getAttribute("style")?target.getAttribute("style"):"";
+        for (var i in cssList) {
+            str += i + ':' + cssList[i] + ';';
+        }
+        target.style.cssText = str;
+    }
+    window.alert = alert();
 </script>
 <body style="text-align: center; background-image: url(pictures/background.png)">
-<input type="hidden" value="${sessionScope.seller.sellerpwd}" id="realpwd">
-<div class="navbar navbar-inverse">
-    <table class="title">
-        <tr id="title_tr" align="center">
-            <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="upload.jsp" class="astyle">发布商品</a></td>
-            <td width="10%" class="title_td"><a href="SellerServlet?method=viewHisGoods" class="astyle">历史商品</a></td>
-            <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
-            <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
-        </tr>
-    </table>
-</div>
-<div style="margin: 0 auto; width: 50%; margin-top: 7%">
-    <form action="" method="post">
-        <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
-            <div>
-                <span style="font-size: xxx-large; color: whitesmoke; text-align: center">修改密码</span>
+<c:if test="${not empty sessionScope.seller}">
+    <input type="hidden" value="${sessionScope.seller.sellerpwd}" id="realpwd">
+    <div class="navbar navbar-inverse">
+        <table class="title">
+            <tr id="title_tr" align="center">
+                <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
+                <td width="10%" class="title_td"><a href="upload.jsp" class="astyle">发布商品</a></td>
+                <td width="10%" class="title_td"><a href="SellerServlet?method=viewHisGoods" class="astyle">历史商品</a></td>
+                <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
+                <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin: 0 auto; width: 50%; margin-top: 7%">
+        <form action="" method="post">
+            <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
+                <div>
+                    <span style="font-size: xxx-large; color: whitesmoke; text-align: center">修改密码</span>
+                </div>
+                <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
+                    <tr>
+                        <td class="t2" width="30%">旧密码</td><td width="70%"><input type="password" name="oldpwd" class="i1" id="oldpwd"></td>
+                    </tr>
+                    <tr>
+                        <td class="t2">新密码</td><td><input type="password" name="newpwd" class="i1" id="newpwd"></td>
+                    </tr>
+                    <tr>
+                        <td class="t2" >确认密码</td><td><input type="password" name="resetpwd" class="i1" id="resetpwd"></td>
+                    </tr>
+                </table>
+                <span style="margin-right: 5%"><button class="bt1" type="button" onclick="panDuan()">提交</button></span><span><input type="reset" value="重置" class="i2"></span>
             </div>
-            <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
-                <tr>
-                    <td class="t2" width="30%">旧密码</td><td width="70%"><input type="password" name="oldpwd" class="i1" id="oldpwd"></td>
-                </tr>
-                <tr>
-                    <td class="t2">新密码</td><td><input type="password" name="newpwd" class="i1" id="newpwd"></td>
-                </tr>
-                <tr>
-                    <td class="t2" >确认密码</td><td><input type="password" name="resetpwd" class="i1" id="resetpwd"></td>
-                </tr>
-            </table>
-            <span style="margin-right: 5%"><button class="bt1" type="button" onclick="panDuan()">提交</button></span><span><input type="reset" value="重置" class="i2"></span>
-        </div>
-    </form>
-</div>
-
+        </form>
+    </div>
+</c:if>
+<c:if test="${empty sessionScope.seller}">
+    <jsp:forward page="unlogin.jsp"></jsp:forward>
+</c:if>
 </body>
 </html>

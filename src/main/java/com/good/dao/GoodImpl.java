@@ -5,9 +5,13 @@ package com.good.dao;
  */
 import com.good.vo.Good;
 import com.jdbc.Conn;
+import com.user.dao.UserDao;
+import com.user.daoimpl.UserDaoimpl;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GoodImpl implements GoodDao{
 
@@ -99,16 +103,18 @@ public class GoodImpl implements GoodDao{
     }
 
     @Override
-    public ArrayList<Good> viewHisGood() throws SQLException, ClassNotFoundException {
+    public Map<Good,String> viewHisGood() throws SQLException, ClassNotFoundException {
         Conn c = new Conn();
         Connection conn = c.connection();
+        UserDao ud = new UserDaoimpl();
         //通过商品状态找出历史商品信息
         String sql = "select * from good where isonline = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setBoolean(1,false);
         ResultSet res = pstmt.executeQuery();
-        ArrayList<Good> gls = new ArrayList<>();//商品信息列表
+        Map<Good,String> gls = new HashMap<>();//商品信息列表
         Good g;//商品
+        String uname;//购买人姓名
         String sql2;
         ArrayList<String> pictures = new ArrayList<>();//图片路径列表
         while(res.next()){
@@ -124,7 +130,8 @@ public class GoodImpl implements GoodDao{
             rs2.close();
             pstmt2.close();
             g.setPictures(pictures);
-            gls.add(g);
+            uname = ud.getBuyer(g.getGoodId()).getUsername();
+            gls.put(g,uname);
         }
         pstmt.close();
         conn.close();
@@ -162,17 +169,29 @@ public class GoodImpl implements GoodDao{
         Conn c = new Conn();
         Connection conn = c.connection();
         //交易成功，商品下架
-        String sql1 = "update good set isonline = ? where goodid = ?";
-        PreparedStatement pstmt1 = conn.prepareStatement(sql1);
-        pstmt1.setBoolean(1,false);
-        pstmt1.setInt(2,goodid);
-        pstmt1.execute();
-        pstmt1.close();
-        String sql2 = "delete from transaction where goodid = ?";
-        PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-        pstmt2.setInt(1,goodid);
-        pstmt2.execute();
-        pstmt2.close();
+        //获取被选定意向购买人id
+        String sql = "select userid from transaction where goodid = ? and ischosen = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1,goodid);
+        pstmt.setBoolean(2,true);
+        ResultSet rs = pstmt.executeQuery();
+        if(rs.next()) {
+            int userid = rs.getInt("userid");
+            //更新good表
+            String sql1 = "update good set isonline = ?, userid = ? where goodid = ?";
+            PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+            pstmt1.setBoolean(1, false);
+            pstmt1.setInt(2, userid);
+            pstmt1.setInt(3, goodid);
+            pstmt1.execute();
+            pstmt1.close();
+            //删除这个商品的所有意向购买人
+            String sql2 = "delete from transaction where goodid = ?";
+            PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+            pstmt2.setInt(1, goodid);
+            pstmt2.execute();
+            pstmt2.close();
+        }
         conn.close();
     }
 }

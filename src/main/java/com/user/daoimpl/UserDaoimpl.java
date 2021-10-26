@@ -10,7 +10,7 @@ public class UserDaoimpl implements UserDao {
     private static  final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static  final String USER ="root";
     private static  final String PASSWORD ="wjt256634@";
-    private static  final String URL ="jdbc:mysql://localhost:3306/shopingol?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC";
+    private static  final String URL ="jdbc:mysql://10.50.32.46:3306/shopingol?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC";
     static {
         try {
             Class.forName(DRIVER);

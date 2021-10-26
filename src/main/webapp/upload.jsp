@@ -240,48 +240,52 @@
         path = path.substring(0,path.indexOf("\\target"));
     }
 %>
-<div class="navbar11 navbar-inverse">
-    <table class="title">
-        <tr id="title_tr" align="center">
-            <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="upload.jsp" class="astyle">发布商品</a></td>
-            <td width="10%" class="title_td"><a href="SellerServlet?method=viewHisGoods" class="astyle">历史商品</a></td>
-            <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
-            <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
-        </tr>
-    </table>
-</div>
-<div style="margin: 0 auto; width: 50%; margin-top: 7%">
-    <form action="SellerServlet?method=releaseGood" method="post" enctype="multipart/form-data">
-        <input type="hidden" value="<%=path%>" name="path" style="position: absolute">
-        <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
-            <div>
-                <span style="font-size: xxx-large; color: whitesmoke; text-align: center">发布商品</span>
+<c:if test="${not empty sessionScope.seller}">
+    <div class="navbar11 navbar-inverse">
+        <table class="title">
+            <tr id="title_tr" align="center">
+                <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
+                <td width="10%" class="title_td"><a href="upload.jsp" class="astyle">发布商品</a></td>
+                <td width="10%" class="title_td"><a href="SellerServlet?method=viewHisGoods" class="astyle">历史商品</a></td>
+                <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
+                <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin: 0 auto; width: 50%; margin-top: 7%">
+        <form action="SellerServlet?method=releaseGood" method="post" enctype="multipart/form-data">
+            <input type="hidden" value="<%=path%>" name="path" style="position: absolute">
+            <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
+                <div>
+                    <span style="font-size: xxx-large; color: whitesmoke; text-align: center">发布商品</span>
+                </div>
+                <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
+                    <tr>
+                        <td class="t2" width="30%">商品名称</td><td width="70%"><input type="text" name="goodname" class="i1" id="goodsname"></td>
+                    </tr>
+                    <tr>
+                        <td class="t2">商品价格</td><td><input type="text" name="goodprice" class="i1" id="goodsprice"></td>
+                    </tr>
+                    <tr>
+                        <td class="t2">商品描述</td><td><input type="text" name="description" class="i1" id="dscription"></td>
+                    </tr>
+<%--                    <tr>--%>
+<%--                        <td class="t2">站长描述</td><td><input type="text" name="wwhDes" class="i1" id="wwhDes"></td>--%>
+<%--                    </tr>--%>
+                    <tr>
+                        <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>
+                    </tr>
+                    <tr>
+                        <td class="t2">图片上传</td><td><input type="file" name="picture" multiple="multiple" /></td>
+                    </tr>
+                </table>
+                <span style="margin-right: 5%"><input class="i2" type="submit" onclick="panDuan()" value="提交"></span><span><input type="reset" value="重置" class="i2"></span>
             </div>
-            <table style="margin: 0 auto; border-spacing: 25px 25px; border-style: none" >
-                <tr>
-                    <td class="t2" width="30%">商品名称</td><td width="70%"><input type="text" name="goodname" class="i1" id="goodsname"></td>
-                </tr>
-                <tr>
-                    <td class="t2">商品价格</td><td><input type="text" name="goodprice" class="i1" id="goodsprice"></td>
-                </tr>
-                <tr>
-                    <td class="t2">商品描述</td><td><input type="text" name="description" class="i1" id="dscription"></td>
-                </tr>
-                <tr>
-                    <td class="t2">站长描述</td><td><input type="text" name="wwhDes" class="i1" id="wwhDes"></td>
-                </tr>
-                <tr>
-                    <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>
-                </tr>
-                <tr>
-                    <td class="t2">图片上传</td><td><input type="file" name="picture" multiple="multiple" /></td>
-                </tr>
-            </table>
-            <span style="margin-right: 5%"><input class="i2" type="submit" onclick="panDuan()" value="提交"></span><span><input type="reset" value="重置" class="i2"></span>
-        </div>
-    </form>
-</div>
-
+        </form>
+    </div>
+</c:if>
+<c:if test="${empty sessionScope.seller}">
+    <jsp:forward page="unlogin.jsp"></jsp:forward>
+</c:if>
 </body>
 </html>

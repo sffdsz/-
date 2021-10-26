@@ -6,7 +6,7 @@ import com.seller.vo.Seller;
 import java.sql.*;
 
 public class SellerDaoImpl implements SellerDao {
-    public static String url="jdbc:mysql://localhost:3306/shopingol?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC";
+    public static String url="jdbc:mysql://10.50.32.46:3306/shopingol?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC";
     public static String mysqluser="root";
     public static String mysqlpassword="wjt256634@";
     @Override

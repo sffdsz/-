@@ -134,7 +134,9 @@
         font-style: inherit;
         margin-left: 5%;
         color: #a94442;
+
     }
+
 </style>
 <c:if test="${empty pictures}">
 <jsp:forward page="GoodServlet"></jsp:forward>
@@ -195,11 +197,88 @@
 
     function dianji(x) {
         if (x == "true") {
-            alert("商品已冻结");
+            alert("商品已冻结", "ZT2");
         } else {
-            alert("商品正在出售");
+            alert("商品正在出售", "ZT1");
         }
     }
+
+    function panDuan(freeze) {
+        if (freeze == "true") {
+            alert("抱歉，商品已冻结，无法购买", "DG");
+        } else {
+            location.href = "information.jsp";
+        }
+    }
+
+    function alert(data, type) {
+        var div = document.createElement("div");
+        var p = document.createElement("p");
+        var img = document.createElement("img");
+        var btu = document.createElement("button");
+        var text = document.createTextNode(data?data:"");
+        var btuTest = document.createTextNode("确定");
+        var imgPath;
+        if (type == "DG") {
+            imgPath = "pictures/叉叉.png";
+        } else if (type == "ZT1") {
+            imgPath = "pictures/商品.png";
+        } else if (type == "ZT2") {
+            imgPath = "pictures/商品冻结.png";
+        }
+
+        p.appendChild(text);
+        btu.appendChild(btuTest);
+        img.src = imgPath;
+        div.appendChild(img);
+        div.appendChild(p);
+        div.appendChild(btu);
+        document.getElementsByTagName("body")[0].appendChild(div);
+        btu.onclick = function () {
+            div.parentNode.removeChild(div);
+        }
+        css(btu, {
+            'margin': '0 auto',
+            'background-color': '#4CAF50',
+            'border': 'none',
+            'color': 'white',
+            'margin-top': '5%',
+            'padding': '5px 10px',
+            'text-decoration': 'none',
+            'display': 'inline-block',
+            'font-size': '16px',
+            'border-radius': '5px'
+        })
+        css(div, {
+            'top': '30%',
+            'left': '40%',
+            'background': 'white',
+            'position': 'fixed',
+            'margin': '0 auto',
+            'width': '400px',
+            'text-align': 'center',
+            'height': '250px',
+            'border-radius': '20px'
+        })
+        css(img, {
+            'width': '100px',
+            'height': '100px',
+        })
+        css(img, {
+            'margin-top': '20px'
+        })
+    }
+
+    function css(target, cssList) {
+        var str = target.getAttribute("style")?target.getAttribute("style"):"";
+        for (var i in cssList) {
+            str += i + ':' + cssList[i] + ';';
+        }
+        target.style.cssText = str;
+    }
+    window.alert = alert();
+
+
 </script>
 <body style="background-image: url(pictures/background.png);">
 <input type="hidden" value="${pageContext.request.contextPath}/pictures/" id="src">
@@ -238,22 +317,25 @@
                 <h6 style="color: red">${sessionScope.good.wwhDes}</h6>
             </div>
             <div style="padding-top: 2%; padding-bottom: 2%; padding-left: 50%; text-align: left; background-image: url(pictures/price3.png)">
-                <span style="color: orangered; font-size: large; text-align: center; padding-bottom: 15px">价格</span><span style="color: orangered; font-size: xxx-large; text-align: center; margin-left: 10%">${sessionScope.good.price}</span>
+                <span style="color: orangered; font-size: large; text-align: center; padding-bottom: 15px">价格</span><span style="color: orangered; font-size: xxx-large; text-align: center; margin-left: 10%">￥${sessionScope.good.price}</span>
             </div>
             <div style="margin: 0 auto; float: left; padding-top: 10%; padding-left: 10%">
-                <input type="submit" value="选购" class="button1">
+<%--                <input type="submit" value="选购" class="button1">--%>
+                <input type="button" value="选购" class="button1" onclick="panDuan('${sessionScope.good.freeze}')">
             </div>
         </div>
         <div style="width: 90%; height: 100%; float: left;display: none; background: #d9edf7" id="w2">
             <div style="margin: 0 auto; text-align: center; margin-top: 5%">
                 <img src="pictures/mg.png" class="i2" id="picture">
             </div>
-            <div style="margin: 0 auto; text-align: center; margin-top: 10%">
-                <span><img src="pictures/back.png" style="width: 10%; height: 10%; cursor: pointer" onclick="back()"></span>
-                <c:forEach items="${sessionScope.pictures}" var="i" varStatus="st">
-                    <span id="${st.index}" style="max-width: 30%; box-shadow: 0px 0px 10px #2e6da4"><img class="i3" src="${i}"></span>
-                </c:forEach>
-                <span><img src="pictures/more.png" style="width: 10%; height: 10%; cursor: pointer" onclick="next()"></span>
+            <div style="margin: 0 auto; text-align: center; margin-top: 10%; width: 80%; height: 20%; position: relative; left: 25%">
+                <div><img src="pictures/back.png" style="width: 50px; height: 50px; cursor: pointer; float: left" onclick="back()"></div>
+                <div style="display: inline; overflow-x: scroll; white-space: nowrap; float: left">
+                    <c:forEach items="${sessionScope.pictures}" var="i" varStatus="st">
+                        <span id="${st.index}" style="max-width: 30%; box-shadow: 0px 0px 10px #2e6da4"><img class="i3" src="${i}"></span>
+                    </c:forEach>
+                </div>
+                <div><img src="pictures/more.png" style="width: 50px; height: 50px; cursor: pointer; float: left" onclick="next()"></div>
             </div>
         </div>
         <div style="width: 90%; height: 100%; float: left;display: none; background: #d9edf7" id="w3">
