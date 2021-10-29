@@ -282,6 +282,7 @@
             </div>
         </form>
     </div>
+
 </c:if>
 <c:if test="${empty sessionScope.seller}">
     <jsp:forward page="unlogin.jsp"></jsp:forward>
