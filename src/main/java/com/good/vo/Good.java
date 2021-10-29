@@ -15,14 +15,12 @@ public class Good {
     private boolean isOnline;//上架状态
     private String userid;//出售后购买人id，未出售为空
     private ArrayList<String> pictures;//商品图片路径列表
-    private String wwhDes;//站长描述
-    private String origin;//商品产地
     private int index;//商品索引
     //Constructor
     public Good() {
     }
 
-    public Good(int goodId, String goodName, String price, String description, boolean freeze, boolean isPurchased, boolean isOnline, String userid, String wwhDes, String origin){
+    public Good(int goodId, String goodName, String price, String description, boolean freeze, boolean isPurchased, boolean isOnline, String userid){
         this.goodId = goodId;
         this.goodName = goodName;
         this.price = price;
@@ -31,8 +29,6 @@ public class Good {
         this.isPurchased = isPurchased;
         this.isOnline = isOnline;
         this.userid = userid;
-        this.wwhDes = wwhDes;
-        this.origin = origin;
     }
 
     //Getter and Setter
@@ -106,22 +102,6 @@ public class Good {
 
     public void setPictures(ArrayList<String> pictures) {
         this.pictures = pictures;
-    }
-
-    public String getWwhDes() {
-        return wwhDes;
-    }
-
-    public void setWwhDes(String wwhDes) {
-        this.wwhDes = wwhDes;
-    }
-
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
     }
 
     public int getIndex() {

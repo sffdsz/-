@@ -232,7 +232,6 @@
         }
         if (flag == 1) {
             alert("提交成功！");
-            location.href = "SellerServlet?method=changePwd&oldpwd=" + oldpwd + "&newpwd=" + newpwd;
         }
     }
 
@@ -254,6 +253,9 @@
         document.getElementsByTagName("body")[0].appendChild(div);
         btu.onclick = function () {
             div.parentNode.removeChild(div);
+            var oldpwd = document.getElementById("oldpwd").value;
+            var newpwd = document.getElementById("newpwd").value;
+            location.href = "SellerServlet?method=changePwd&oldpwd=" + oldpwd + "&newpwd=" + newpwd;
         }
         css(btu, {
             'margin': '0 auto',

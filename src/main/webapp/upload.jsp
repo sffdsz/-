@@ -226,7 +226,6 @@
             flag = 0;
         }
         if (flag == 1) {
-            alert("提交成功！");
             //location.href = "./setting.jsp";
         }
     }
@@ -272,14 +271,14 @@
 <%--                    <tr>--%>
 <%--                        <td class="t2">站长描述</td><td><input type="text" name="wwhDes" class="i1" id="wwhDes"></td>--%>
 <%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>--%>
+<%--                    </tr>--%>
                     <tr>
-                        <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>
-                    </tr>
-                    <tr>
-                        <td class="t2">图片上传</td><td><input type="file" name="picture" multiple="multiple" /></td>
+                        <td class="t2">图片上传</td><td><input type="file" name="picture" multiple="multiple" accept="image/*"/></td>
                     </tr>
                 </table>
-                <span style="margin-right: 5%"><input class="i2" type="submit" onclick="panDuan()" value="提交"></span><span><input type="reset" value="重置" class="i2"></span>
+                <span style="margin-right: 5%"><input class="i2" type="submit" value="提交"></span><span><input type="reset" value="重置" class="i2"></span>
             </div>
         </form>
     </div>

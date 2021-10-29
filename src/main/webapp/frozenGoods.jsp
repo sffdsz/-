@@ -299,11 +299,15 @@
                     <c:when test="${not empty sessionScope.gls}">
                         <c:forEach items="${sessionScope.gls}" var="f" varStatus="s">
                             <tr style="margin: 0 auto">
-                                <td><img src="${pageContext.request.contextPath}/${f.pictures.get(0)}"></td><td>${f.goodId}</td><td>${f.goodName}</td>
+                                <td><img src="${f.pictures.get(0)}"></td><td>${f.goodId}</td><td>${f.goodName}</td>
                                 <td>${f.freeze?"冻结":"在售"}</td>
                                 <td style="border-spacing: 2px">
-                                    <span><button class="but1" type="button" onclick="unFrozen('${f.goodId}', '${requestScope.index}')">解除冻结</button></span>
-                                    <span><button class="but1" type="button" onclick="frozen('${f.goodId}', '${requestScope.index}')">冻结</button></span>
+                                    <c:if test="${f.freeze == true}">
+                                        <span><button class="but1" type="button" onclick="unFrozen('${f.goodId}', '${requestScope.index}')">解除冻结</button></span>
+                                    </c:if>
+                                    <c:if test="${f.freeze == false}">
+                                        <span><button class="but1" type="button" onclick="frozen('${f.goodId}', '${requestScope.index}')">冻结</button></span>
+                                    </c:if>
                                         <%-- <span><button class="but1" type="button" onclick="down('${c.goodId}')">下架商品</button></span>--%>
                                 </td>
                             </tr>

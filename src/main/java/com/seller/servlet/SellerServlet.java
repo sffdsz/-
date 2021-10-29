@@ -98,15 +98,38 @@ public class SellerServlet extends HttpServlet {
         String newpwd=request.getParameter("newpwd");
         oldpwd=new String(oldpwd.getBytes("iso-8859-1"),"utf-8");
         newpwd=new String(newpwd.getBytes("iso-8859-1"),"utf-8");
+        Boolean flag=true;
         if(oldpwd.equals(se.getSellerpwd())){
-            SellerDao sd=new SellerDaoImpl();
-            try {
-                sd.changePwd(sellname,newpwd);
-                se.setSellerpwd(newpwd);
-                hs.setAttribute("seller",se);
-                request.getRequestDispatcher("setting.jsp").forward(request,response);
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
+            if(oldpwd.equals(newpwd)){//新旧密码一致
+                flag=false;
+            }else{//判断新密码合法性
+                int len=newpwd.length();
+                if(len==0){//输入为空格字符串
+                    flag=false;
+                }else{
+                    int index=0;
+                    char c;
+                    for(index=0;index<len;index++){
+                        c=newpwd.charAt(index);
+                        if(c==' '){//新密码中包含空格字符串
+                            flag=false;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(flag==true){//新密码合法
+                SellerDao sd=new SellerDaoImpl();
+                try {
+                    sd.changePwd(sellname,newpwd);
+                    se.setSellerpwd(newpwd);
+                    hs.setAttribute("seller",se);
+                    request.getRequestDispatcher("setting.jsp").forward(request,response);
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }else{//新密码不合法
+                request.getRequestDispatcher("updatePassWord.jsp").forward(request,response);
             }
         }else{
             //原密码错误
@@ -139,8 +162,6 @@ public class SellerServlet extends HttpServlet {
             String goodname=null;
             String goodprice=null;
             String description=null;
-            String wwhDes=null;
-            String origin=null;
             String formname=null;
             String formcontent=null;
             ArrayList<String> goodpicture=new ArrayList<>();
@@ -158,6 +179,10 @@ public class SellerServlet extends HttpServlet {
             Iterator<FileItem> fiIter=items.iterator();
             FileItem fi=null;
             Boolean flag=true;
+            int len=0;
+            int index=0;
+            char c;
+            String prompt="";//存储错误信息
             while(fiIter.hasNext()){
                 fi=fiIter.next();
                 if(fi.isFormField()){
@@ -165,37 +190,88 @@ public class SellerServlet extends HttpServlet {
                     formcontent=fi.getString("utf-8");
                     if(formname.equals("goodname")){
                         goodname=formcontent;
-                        if(goodname.equals("")){
+                        if(goodname.equals("")){//输入为空
+                            prompt="请输入商品名称。";
                             flag=false;
                             break;
+                        }else{
+                            len=goodname.length();
+                            for(index=0;index<len;index++){
+                                c=goodname.charAt(index);
+                                if(c!=' '){//不为空格字符串
+                                    break;
+                                }
+                            }
+                            if(index==len){//为空格字符串
+                                prompt="请输入商品名称。";
+                                flag=false;
+                                break;
+                            }
                         }
                     }else if(formname.equals("description")){
                         description=formcontent;
                         if(description.equals("")){
+                            prompt="请输入商品描述。";
                             flag=false;
                             break;
+                        }else{
+                            len=description.length();
+                            for(index=0;index<len;index++){
+                                c=description.charAt(index);
+                                if(c!=' '){
+                                    break;
+                                }
+                            }
+                            if(index==len){
+                                prompt="请输入商品描述。";
+                                flag=false;
+                                break;
+                            }
                         }
                     }else if(formname.equals("goodprice")){
                         goodprice=formcontent;
-                        if(goodprice.equals("")){
+                        int pointposition=-1;//记录小数点位置
+                        if(goodprice.equals("")){//判断是否为空
+                            prompt="请输入商品价格。";
                             flag=false;
                             break;
-                        }
-                    }else if(formname.equals("wwhDes")){
-                        wwhDes=formcontent;
-                        if(wwhDes.equals("")){
-                            flag=false;
-                            break;
-                        }
-                    }else if(formname.equals("origin")){
-                        origin=formcontent;
-                        if(origin.equals("")){
-                            flag=false;
-                            break;
+                        }else{
+                            len=goodprice.length();
+                            for(index=0;index<len;index++){//判断字符串是否仅有数字和小数点组成
+                                c=goodprice.charAt(index);
+                                if(!((c>='0'&&c<='9')||c=='.')){//字符不为数字或小数点
+                                    prompt="请输入合法的商品价格。";
+                                    flag=false;
+                                    break;
+                                }
+                                if(c=='.'){
+                                    if(pointposition==-1){//尚未出现过小数点
+                                        if(index==0||index==(len-1)||index<(len-3)){//小数点为字符串第一个或最后一个字符或小数点后面不止两位小数
+                                            prompt="请输入合法的商品价格。";
+                                            flag=false;
+                                            break;
+                                        }else{
+                                            pointposition=index;//记录小数点位置
+                                        }
+                                    }else{//已经出现过小数点
+                                        prompt="请输入合法的商品价格。";
+                                        flag=false;
+                                        break;
+                                    }
+                                }
+                            }
+                            c=goodprice.charAt(0);//判断是否存在前导零
+                            if(c=='0'){
+                                prompt="请输入合法的商品价格。";
+                                flag=false;
+                            }
+                            if(flag==false){
+                                break;
+                            }
                         }
                     }else if(formname.equals("path")){
                         proPath=formcontent+"\\src\\main\\webapp\\pictures";
-                        if(proPath.equals("")){
+                        if(proPath.length()==0){
                             flag=false;
                             break;
                         }
@@ -208,37 +284,50 @@ public class SellerServlet extends HttpServlet {
                     }
                     ext=oFn.substring(oFn.lastIndexOf("."));
                     if(ext.equals(".png")||ext.equals(".jpg")){
-                        df = proPath+"\\"+oFn.replace("/","\\");//文件存储在磁盘的路径
+                        fnf=UUID.randomUUID().toString();
+                        fn=fnf+ext;
+                        df = proPath+"\\"+fn;//文件存储在磁盘的路径
                         updir = df.substring(0,df.lastIndexOf("\\"));
                         fUpDir = new File(updir);
+                        System.out.println(df);
                         if(!fUpDir.exists()){
                             fUpDir.mkdirs();
                         }
                         try {
                             fi.write(new File(df));
-                            goodpicture.add("pictures/"+oFn);
+                            goodpicture.add("/pictures/"+fn);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        System.out.println(df);
                     }else{//文件非图片
-
+                        flag=false;
+                        break;
                     }
                 }
             }
             //修改商品表
             if(flag==false){
-                request.getRequestDispatcher("upload.jsp").forward(request,response);
+                request.setAttribute("prompt",prompt);
+                request.getRequestDispatcher("upload_fail.jsp").forward(request,response);
             }else {
-                GoodDao gd= new GoodImpl();
-                gd.releaseGood(goodname,goodprice,description,goodpicture,wwhDes,origin);
-                ArrayList<Good> gls=new ArrayList<>();
-                gls=gd.getGoods();
-                HttpSession hs=request.getSession();
-                hs.setAttribute("gls",gls);
-                //修改商品图片表
-                //gd.()
-                request.getRequestDispatcher("setting.jsp").forward(request,response);
+                if(goodpicture.isEmpty()==true){
+                    prompt="请选择商品图片。";
+                    flag=false;
+                }
+                if(flag==false){
+                    request.setAttribute("prompt",prompt);
+                    request.getRequestDispatcher("upload_fail.jsp").forward(request,response);
+                }else{
+                    GoodDao gd= new GoodImpl();
+                    gd.releaseGood(goodname,goodprice,description,goodpicture);
+                    ArrayList<Good> gls=new ArrayList<>();
+                    gls=gd.getGoods();
+                    HttpSession hs=request.getSession();
+                    hs.setAttribute("gls",gls);
+                    //修改商品图片表
+                    //gd.()
+                    request.getRequestDispatcher("setting.jsp").forward(request,response);
+                }
             }
         } catch (FileUploadException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();

@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>商家登录</title>
+    <title>发布商品失败页面</title>
 </head>
 <style>
     .navbar {
@@ -204,29 +204,14 @@
         vertical-align: middle;
     }
 </style>
+<%
+    request.setCharacterEncoding("UTF-8");
+    String str=(String)request.getAttribute("prompt");
+%>
 <script>
-    function panDuan() {
-        var sellername = document.getElementById("sellername").value;
-        var sellerpwd = document.getElementById("sellerpwd").value;
-        var flag = 1;
-        if (sellername == "") {
-            document.getElementById("sellername").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("sellername").placeholder = "请输入用户名";
-            flag = 0;
-        }
-        if (sellerpwd == "") {
-            document.getElementById("sellerpwd").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("sellerpwd").placeholder = "请输入密码";
-            flag = 0;
-        }
-        if (flag == 1) {
-            //alert("登录成功！");
-            location.href = "SellerServlet?method=login&sellername=" + sellername + "&sellerpwd=" + sellerpwd;
-        }
-    }
 
     function back() {
-        location.href = "sign_in.jsp";
+        location.href = "upload.jsp";
     }
 </script>
 <body style="text-align: center; background-image: url(pictures/background.png)">
@@ -239,7 +224,7 @@
         <form action="SellerServlet?method=login" method="post">
             <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: white; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
                 <div style="display: table; margin: 0 auto; text-align: center">
-                    <span style="vertical-align: middle; display: table-cell; color: red; font-family: 'Microsoft Himalaya'; font-size: xxx-large">登录失败</span>
+                    <span style="vertical-align: middle; display: table-cell; color: red; font-family: 'Microsoft Himalaya'; font-size: xxx-large"><%=str%></span>
                     <span style="display: table-cell; vertical-align: middle"><img src="pictures/哭脸.png" style="width: 60px; height: 60px"></span>
                 </div>
             </div>

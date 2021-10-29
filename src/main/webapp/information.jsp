@@ -211,6 +211,17 @@
             document.getElementById("username").placeholder = "请输入姓名";
             flag = 0;
         }
+        else {
+            for(var i = 0;i < username.length; i++){
+                if(username.charCodeAt(i)<255){
+                    document.getElementById("username").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+                    document.getElementById("username").value="";
+                    document.getElementById("username").placeholder="请输入正确的姓名";
+                    flag=0;
+                    break;
+                }
+            }
+        }
         if (transactionaddress == "") {
             document.getElementById("transactionaddress").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
             document.getElementById("transactionaddress").placeholder = "请输入地址";
@@ -218,14 +229,92 @@
         }
         if (userphone == "") {
             document.getElementById("userphone").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("userphone").placeholder = "请输入电话号码";
+            document.getElementById("userphone").placeholder = "请输入您的手机号";
             flag = 0;
+        }
+        else if(isNaN(userphone)){
+            document.getElementById("userphone").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("userphone").value="";
+            document.getElementById("userphone").placeholder="请输入数字";
+            flag=0;
+        }
+        else if(userphone.toString().length!=11){
+            document.getElementById("userphone").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("userphone").value="";
+            document.getElementById("userphone").placeholder="请输入11位手机号";
+            flag=0;
         }
         if (flag == 1) {
             alert("提交成功！");
-            location.href = "UserServlet?username="+username+"&userphone="+userphone+"&transactionaddress="+transactionaddress;
         }
     }
+
+    function alert(data) {
+        var div = document.createElement("div");
+        var p = document.createElement("p");
+        var img = document.createElement("img");
+        var btu = document.createElement("button");
+        var text = document.createTextNode(data?data:"");
+        var btuTest = document.createTextNode("确定");
+        var imgPath = "pictures/勾选.png";
+        var username = document.getElementById("username").value;
+        var transactionaddress = document.getElementById("transactionaddress").value;
+        var userphone = document.getElementById("userphone").value;
+
+        p.appendChild(text);
+        btu.appendChild(btuTest);
+        img.src = imgPath;
+        div.appendChild(img);
+        div.appendChild(p);
+        div.appendChild(btu);
+        document.getElementsByTagName("body")[0].appendChild(div);
+        btu.onclick = function () {
+            div.parentNode.removeChild(div);
+            var username = document.getElementById("username").value;
+            var transactionaddress = document.getElementById("transactionaddress").value;
+            var userphone = document.getElementById("userphone").value;
+            location.href = "UserServlet?username="+username+"&userphone="+userphone+"&transactionaddress="+transactionaddress;
+        }
+        css(btu, {
+            'margin': '0 auto',
+            'background-color': '#4CAF50',
+            'border': 'none',
+            'color': 'white',
+            'margin-top': '5%',
+            'padding': '5px 10px',
+            'text-decoration': 'none',
+            'display': 'inline-block',
+            'font-size': '16px',
+            'border-radius': '5px'
+        })
+        css(div, {
+            'top': '30%',
+            'left': '40%',
+            'background': 'white',
+            'position': 'fixed',
+            'margin': '0 auto',
+            'width': '400px',
+            'text-align': 'center',
+            'height': '250px',
+            'border-radius': '20px'
+        })
+        css(img, {
+            'width': '100px',
+            'height': '100px',
+        })
+        css(img, {
+            'margin-top': '20px'
+        })
+    }
+
+    function css(target, cssList) {
+        var str = target.getAttribute("style")?target.getAttribute("style"):"";
+        for (var i in cssList) {
+            str += i + ':' + cssList[i] + ';';
+        }
+        target.style.cssText = str;
+    }
+    window.alert = alert();
 </script>
 <body style="text-align: center; background-image: url(pictures/background.png)">
 <div class="navbar navbar-inverse">

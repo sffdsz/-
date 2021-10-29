@@ -136,28 +136,38 @@
         color: #a94442;
 
     }
+    .s1 {
+        cursor: pointer;
+        display: table-cell;
+        vertical-align: middle;
+    }
 
 </style>
 <c:if test="${empty pictures}">
-<jsp:forward page="GoodServlet"></jsp:forward>
+    <c:if test="${empty requestScope.flag}">
+        <jsp:forward page="GoodServlet"></jsp:forward>
+    </c:if>
 </c:if>
 <%
     List<String> imgList = (List<String>)session.getAttribute("pictures");
     Good good = (Good) session.getAttribute("good");
     String s = "";
-    Iterator<String> it = imgList.iterator();
-    while (it.hasNext()) {
-        String url = it.next();
-        if (s == "") {
-            s += url;
-        } else {
-            s = s + " " + url;
+    if (imgList != null) {
+        Iterator<String> it = imgList.iterator();
+        while (it.hasNext()) {
+            String url = it.next();
+            if (s == "") {
+                s += url;
+            } else {
+                s = s + " " + url;
+            }
         }
     }
 %>
 
 
 <script>
+    window.alert = alert();
     var index = 0;
     var imgList = "<%=s%>".split(" ");
     function next() {
@@ -276,83 +286,104 @@
         }
         target.style.cssText = str;
     }
-    window.alert = alert();
 
+    function login() {
+        location.href = "sign_in.jsp";
+    }
 
 </script>
 <body style="background-image: url(pictures/background.png);">
-<input type="hidden" value="${pageContext.request.contextPath}/pictures/" id="src">
-<div class="navbar navbar-inverse">
-    <table class="title">
-        <tr id="title_tr" align="center">
-            <td width="60%" align="center"><a href="GoodServlet" id="titleText">在 线 购 物 系 统</a></td>
-            <td width="10%" class="title_td"><a href="GoodServlet" class="astyle">商品列表</a></td>
-            <td width="10%" class="title_td"><a class="astyle" onclick="dianji('${sessionScope.good.freeze}')">商品状态</a></td>
-            <td width="10%" class="title_td"><a href="./sign_in.jsp" class="astyle">商家登录</a></td>
-        </tr>
-    </table>
-</div>
-<form action="information.jsp" method="post">
-    <div class="bd">
-        <div style="width: 10%; height: 100%; background: #9acfea; float: left">
-            <div id="d1" class="dh" onclick="document.getElementById('w1').style.display='block';
+<c:if test="${not empty sessionScope.good}">
+    <input type="hidden" value="${pageContext.request.contextPath}/pictures/" id="src">
+    <div class="navbar navbar-inverse">
+        <table class="title">
+            <tr id="title_tr" align="center">
+                <td width="60%" align="center"><a href="GoodServlet" id="titleText">在 线 购 物 系 统</a></td>
+                <td width="10%" class="title_td"><a href="GoodServlet" class="astyle">商品列表</a></td>
+                <td width="10%" class="title_td"><a class="astyle" onclick="dianji('${sessionScope.good.freeze}')">商品状态</a></td>
+                <td width="10%" class="title_td"><a href="./sign_in.jsp" class="astyle">商家登录</a></td>
+            </tr>
+        </table>
+    </div>
+    <form action="information.jsp" method="post">
+        <div class="bd">
+            <div style="width: 10%; height: 100%; background: #9acfea; float: left">
+                <div id="d1" class="dh" onclick="document.getElementById('w1').style.display='block';
             document.getElementById('w2').style.display='none'; document.getElementById('w3').style.display='none';
             document.getElementById('d1').style.background='#2e6da4'; document.getElementById('d2').style.background='#9acfea';
             document.getElementById('d3').style.background='#9acfea';"; style="background: #2e6da4;">商品简介</div>
-            <div id="d2" class="dh" onclick="document.getElementById('w2').style.display='block';
+                <div id="d2" class="dh" onclick="document.getElementById('w2').style.display='block';
             document.getElementById('w1').style.display='none'; document.getElementById('w3').style.display='none';
             document.getElementById('d1').style.background='#9acfea'; document.getElementById('d2').style.background='#2e6da4';
             document.getElementById('d3').style.background='#9acfea'">商品图片</div>
-            <div id="d3" class="dh" onclick="document.getElementById('w3').style.display='block';
+                <div id="d3" class="dh" onclick="document.getElementById('w3').style.display='block';
             document.getElementById('w2').style.display='none'; document.getElementById('w1').style.display='none';
             document.getElementById('d1').style.background='#9acfea'; document.getElementById('d2').style.background='#9acfea';
             document.getElementById('d3').style.background='#2e6da4'">商品信息</div>
-        </div>
-        <div style="width: 90%; height: 100%; float: left; background: #d9edf7" id="w1">
-            <div style="width: 45%; height: 100%; float: left; padding-top: 5%; z-index: 0">
-                <img src="pictures/mg.png" class="i1">
             </div>
-            <div style="padding-top: 5%; padding-left: 50%; text-align: left">
-                <h1 style="margin: 0 auto">${sessionScope.good.goodName}</h1>
-                <h6 style="color: red">${sessionScope.good.wwhDes}</h6>
-            </div>
-            <div style="padding-top: 2%; padding-bottom: 2%; padding-left: 50%; text-align: left; background-image: url(pictures/price3.png)">
-                <span style="color: orangered; font-size: large; text-align: center; padding-bottom: 15px">价格</span><span style="color: orangered; font-size: xxx-large; text-align: center; margin-left: 10%">￥${sessionScope.good.price}</span>
-            </div>
-            <div style="margin: 0 auto; float: left; padding-top: 10%; padding-left: 10%">
-<%--                <input type="submit" value="选购" class="button1">--%>
-                <input type="button" value="选购" class="button1" onclick="panDuan('${sessionScope.good.freeze}')">
-            </div>
-        </div>
-        <div style="width: 90%; height: 100%; float: left;display: none; background: #d9edf7" id="w2">
-            <div style="margin: 0 auto; text-align: center; margin-top: 5%">
-                <img src="pictures/mg.png" class="i2" id="picture">
-            </div>
-            <div style="margin: 0 auto; text-align: center; margin-top: 10%; width: 80%; height: 20%; position: relative; left: 25%">
-                <div><img src="pictures/back.png" style="width: 50px; height: 50px; cursor: pointer; float: left" onclick="back()"></div>
-                <div style="display: inline; overflow-x: scroll; white-space: nowrap; float: left">
-                    <c:forEach items="${sessionScope.pictures}" var="i" varStatus="st">
-                        <span id="${st.index}" style="max-width: 30%; box-shadow: 0px 0px 10px #2e6da4"><img class="i3" src="${i}"></span>
-                    </c:forEach>
+            <div style="width: 90%; height: 100%; float: left; background: #d9edf7" id="w1">
+                <div style="width: 45%; height: 100%; float: left; padding-top: 5%; z-index: 0">
+                    <img src="${sessionScope.good.pictures.get(0)}" class="i1">
                 </div>
-                <div><img src="pictures/more.png" style="width: 50px; height: 50px; cursor: pointer; float: left" onclick="next()"></div>
+                <div style="padding-top: 5%; padding-left: 50%; text-align: left">
+                    <h1 style="margin: 0 auto">${sessionScope.good.goodName}</h1>
+<%--                    <h6 style="color: red">${sessionScope.good.wwhDes}</h6>--%>
+                    <br/>
+                </div>
+                <div style="padding-top: 2%; padding-bottom: 2%; padding-left: 50%; text-align: left; background-image: url(pictures/price3.png)">
+                    <span style="color: orangered; font-size: large; text-align: center; padding-bottom: 15px">价格</span><span style="color: orangered; font-size: xxx-large; text-align: center; margin-left: 10%">￥${sessionScope.good.price}</span>
+                </div>
+                <div style="margin: 0 auto; float: left; padding-top: 10%; padding-left: 10%">
+                        <%--                <input type="submit" value="选购" class="button1">--%>
+                    <input type="button" value="选购" class="button1" onclick="panDuan('${sessionScope.good.freeze}')">
+                </div>
+            </div>
+            <div style="width: 90%; height: 100%; float: left;display: none; background: #d9edf7" id="w2">
+                <div style="margin: 0 auto; text-align: center; margin-top: 5%">
+                    <img src="${sessionScope.good.pictures.get(0)}" class="i2" id="picture">
+                </div>
+                <div style="margin: 0 auto; text-align: center; margin-top: 10%; width: 80%; height: 20%; position: relative; left: 22%">
+                    <div><img src="pictures/back.png" style="width: 50px; height: 50px; cursor: pointer; float: left" onclick="back()"></div>
+                    <div style="display: inline; overflow-x: scroll; white-space: nowrap; float: left">
+                        <c:forEach items="${sessionScope.pictures}" var="i" varStatus="st">
+                            <span id="${st.index}" style="max-width: 30%; box-shadow: 0px 0px 10px #2e6da4"><img class="i3" src="${i}"></span>
+                        </c:forEach>
+                    </div>
+                    <div><img src="pictures/more.png" style="width: 50px; height: 50px; cursor: pointer; float: left" onclick="next()"></div>
+                </div>
+            </div>
+            <div style="width: 90%; height: 100%; float: left;display: none; background: #d9edf7" id="w3">
+                <div style="margin-top: 10%; margin-left: 5%; margin-right: 5%;">
+                    <span class="sp1">商品名称：</span><span class="sp2">${sessionScope.good.goodName}</span>
+                </div>
+<%--                <div style="margin-top: 3%; margin-left: 5%; margin-right: 5%;">--%>
+<%--                    <span class="sp1">商品产地：</span><span class="sp2">${sessionScope.good.origin}</span>--%>
+<%--                </div>--%>
+                <div style="margin-top: 3%; margin-left: 5%; margin-right: 5%;">
+                    <span class="sp1">商品状态：</span><span class="sp2">${sessionScope.good.online?(sessionScope.good.freeze?"冻结":"在售"):"已下架"}</span>
+                </div>
+                <div style="margin-top: 5%; margin-left: 5%; margin-right: 5%; border: 3px #a94442; border-radius: 10px; z-index: 9999; border-style: dotted">
+                    <span class="sp1">${good.description}</span>
+                </div>
             </div>
         </div>
-        <div style="width: 90%; height: 100%; float: left;display: none; background: #d9edf7" id="w3">
-            <div style="margin-top: 10%; margin-left: 5%; margin-right: 5%;">
-                <span class="sp1">商品名称：</span><span class="sp2">${sessionScope.good.goodName}</span>
-            </div>
-            <div style="margin-top: 3%; margin-left: 5%; margin-right: 5%;">
-                <span class="sp1">商品产地：</span><span class="sp2">${sessionScope.good.origin}</span>
-            </div>
-            <div style="margin-top: 3%; margin-left: 5%; margin-right: 5%;">
-                <span class="sp1">商品状态：</span><span class="sp2">${sessionScope.good.online?(sessionScope.good.freeze?"冻结":"在售"):"已下架"}</span>
-            </div>
-            <div style="margin-top: 5%; margin-left: 5%; margin-right: 5%; border: 3px #a94442; border-radius: 10px; z-index: 9999; border-style: dotted">
-                <span class="sp1">${good.description}</span>
-            </div>
-        </div>
+    </form>
+</c:if>
+<c:if test="${empty sessionScope.good}">
+    <div style="position: absolute; z-index: 9999; top: 1%; right: 1%; display: table; vertical-align: middle; cursor: pointer" onclick="login()">
+        <span class="s1"><img src="pictures/登录.png" style="width: 40px; height: 40px"></span>
+        <span class="s1" style="color: white; font-size: xx-large; font-family: 'Microsoft Himalaya'">商家登录</span>
     </div>
-</form>
+    <div style="margin: 0 auto; width: 50%; margin-top: 10%">
+        <form action="SellerServlet?method=login" method="post">
+            <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: white; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
+                <div style="display: table; margin: 0 auto; text-align: center">
+                    <div style="vertical-align: middle; display: table-cell; color: midnightblue; font-family: 'Microsoft Himalaya'; font-size: xx-large">当前没有商品，请等待商家发布。</div>
+                    <div style="display: table-cell; vertical-align: middle"><img src="pictures/笑脸.png" style="width: 60px; height: 60px"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</c:if>
 </body>
 </html>
