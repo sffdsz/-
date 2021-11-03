@@ -267,7 +267,7 @@
                 <c:when test="${not empty sessionScope.userlist}">
                     <c:forEach items="${sessionScope.userlist}" var="c" varStatus="s">
                         <tr style="margin-top: 50%">
-                            <td><input type="checkbox" <c:if test="${c.userid==ui?true:false}"> checked="checked"</c:if> ><td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td>
+                            <td><input type="checkbox" onclick="return false" <c:if test="${c.userid==ui?true:false}"> checked="checked"</c:if> ><td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td>
                             <c:if test="${c.userid==ui?true:false}"><td><input type="button" value="撤销" class="cs" onclick="cancel('${c.userid}', '${sessionScope.good.goodId}', '${requestScope.index}')"></td></c:if>
                             <c:if test="${c.userid==ui?false:true}"><td><input type="button" value="出售" class="cs" onclick="buy('${c.userid}', '${sessionScope.good.goodId}', '${requestScope.index}')"></td></c:if>
                         </tr>
