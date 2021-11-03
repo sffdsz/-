@@ -123,7 +123,6 @@ public class GoodImpl implements GoodDao{
             ResultSet rs2 = pstmt2.executeQuery();
             while(rs2.next()){
                 pictures.add(rs2.getString("picture"));
-                System.out.println(rs2.getString("picture"));
             }
             rs2.close();
             pstmt2.close();

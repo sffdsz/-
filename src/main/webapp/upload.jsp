@@ -212,22 +212,30 @@
         var flag = 1;
         if (goodsname == "") {
             document.getElementById("goodsname").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("goodsname").placeholder = "请输入用户名";
+            document.getElementById("goodsname").placeholder = "请输入商品名称";
             flag = 0;
         }
         if (goodsprice == "") {
             document.getElementById("goodsprice").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("goodsprice").placeholder = "请输入密码";
+            document.getElementById("goodsprice").placeholder = "请输入商品价格";
             flag = 0;
+        }
+        else if(isNaN(goodsprice)){
+            document.getElementById("goodsprice").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
+            document.getElementById("goodsprice").value="";
+            document.getElementById("goodsprice").placeholder="请输入数字";
+            flag=0;
         }
         if (dscription == "") {
             document.getElementById("dscription").style.boxShadow = "inset 0 1px 1px white,0 0 8px red";
-            document.getElementById("dscription").placeholder = "请输入密码";
+            document.getElementById("dscription").placeholder = "请输入商品描述";
             flag = 0;
         }
         if (flag == 1) {
-            //location.href = "./setting.jsp";
+            document.form1.action="SellerServlet?method=releaseGood";
+            document.form1.submit();
         }
+
     }
 </script>
 <body style="text-align: center; background-image: url(pictures/background.png)">
@@ -252,7 +260,7 @@
         </table>
     </div>
     <div style="margin: 0 auto; width: 50%; margin-top: 7%">
-        <form action="SellerServlet?method=releaseGood" method="post" enctype="multipart/form-data">
+        <form name="form1"action="SellerServlet?method=releaseGood" method="post" enctype="multipart/form-data">
             <input type="hidden" value="<%=path%>" name="path" style="position: absolute">
             <div style="border: 5px #e4b9c0; border-radius: 10px; border-style: solid; background: lightskyblue; margin-left: 15%; margin-right: 15%; padding-bottom: 7%; padding-top: 5%">
                 <div>
@@ -268,17 +276,17 @@
                     <tr>
                         <td class="t2">商品描述</td><td><input type="text" name="description" class="i1" id="dscription"></td>
                     </tr>
-<%--                    <tr>--%>
-<%--                        <td class="t2">站长描述</td><td><input type="text" name="wwhDes" class="i1" id="wwhDes"></td>--%>
-<%--                    </tr>--%>
-<%--                    <tr>--%>
-<%--                        <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>--%>
-<%--                    </tr>--%>
+                        <%--                    <tr>--%>
+                        <%--                        <td class="t2">站长描述</td><td><input type="text" name="wwhDes" class="i1" id="wwhDes"></td>--%>
+                        <%--                    </tr>--%>
+                        <%--                    <tr>--%>
+                        <%--                        <td class="t2">产地</td><td><input type="text" name="origin" class="i1" id="origin"></td>--%>
+                        <%--                    </tr>--%>
                     <tr>
                         <td class="t2">图片上传</td><td><input type="file" name="picture" multiple="multiple" accept="image/*"/></td>
                     </tr>
                 </table>
-                <span style="margin-right: 5%"><input class="i2" type="submit" value="提交"></span><span><input type="reset" value="重置" class="i2"></span>
+                <span style="margin-right: 5%"><input class="i2" type="button" value="提交" onclick="panDuan()"></span><span><input type="reset" value="重置" class="i2"></span>
             </div>
         </form>
     </div>

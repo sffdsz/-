@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class Conn {
     private static final String DATABASENAME = "root";
-    private static final String DATABASEPASS = "wjt256634@";
+    private static final String DATABASEPASS = "root";
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://10.50.32.46:3306/shopingol?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/shopingol?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
     public Conn(){}
 

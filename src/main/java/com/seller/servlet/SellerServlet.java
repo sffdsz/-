@@ -39,24 +39,25 @@ public class SellerServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String method=request.getParameter("method");
-        System.out.println(1);
-        if(method.equals("login")){
+        if(method.equals("login")){//登录
             login(request,response);
-        }else if(method.equals("changePwd")){
+        }else if(method.equals("changePwd")){//修改密码
             changePwd(request,response);
-        }else if(method.equals("viewHisGoods")){
+        }else if(method.equals("viewHisGoods")){//查看历史商品
             viewHisGood(request,response);
-        }else if(method.equals("releaseGood")){
+        }else if(method.equals("releaseGood")){//发布商品
             releaseGood(request,response);
-        }else if(method.equals("freezeGood")){
+        }else if(method.equals("freezeGood")){//冻结商品
             freezeGood(request,response);
-        }else if(method.equals("transaction")){
+        }else if(method.equals("transaction")){//选择用户交易
             transaction(request,response);
-        }else if(method.equals("goodBackOnline")){
+        }else if(method.equals("canceltransaction")){//撤销交易
+            canceltransaction(request,response);
+        } else if(method.equals("goodBackOnline")){//商品重新上线
             goodBackOnline(request,response);
-        }else if(method.equals("transactionSuccess")){
+        }else if(method.equals("transactionSuccess")){//交易成功
             transactionSuccess(request,response);
-        }else if(method.equals("viewBuyerInfo")){
+        }else if(method.equals("viewBuyerInfo")){//查看购买人信息
             viewBuyerInfo(request,response);
         }
     }
@@ -90,9 +91,12 @@ public class SellerServlet extends HttpServlet {
     }
 
     protected void changePwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
         HttpSession hs=request.getSession();
         Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
+        request.setCharacterEncoding("utf-8");
         String sellname=se.getSellername();
         String oldpwd=request.getParameter("oldpwd");
         String newpwd=request.getParameter("newpwd");
@@ -143,11 +147,15 @@ public class SellerServlet extends HttpServlet {
     }
 
     protected void viewHisGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
         Map<Good,String> glist=null;
         GoodDao gd=new GoodImpl();
         try {
             glist=gd.viewHisGood();
-            HttpSession hs = request.getSession();
             hs.setAttribute("hisgoodlist",glist);
             request.getRequestDispatcher("history.jsp").forward(request,response);
 //            viewHisGoodsChangeIndex(request, response);
@@ -158,6 +166,17 @@ public class SellerServlet extends HttpServlet {
     }
 
     protected void releaseGood(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
+        Good good =(Good) hs.getAttribute("good");
+        if(good!=null){
+            if(good.isOnline()==true){
+                request.getRequestDispatcher("unlogin.jsp").forward(request,response);//已经有商品不可再次发布
+            }
+        }
         try {
             String goodname=null;
             String goodprice=null;
@@ -289,7 +308,6 @@ public class SellerServlet extends HttpServlet {
                         df = proPath+"\\"+fn;//文件存储在磁盘的路径
                         updir = df.substring(0,df.lastIndexOf("\\"));
                         fUpDir = new File(updir);
-                        System.out.println(df);
                         if(!fUpDir.exists()){
                             fUpDir.mkdirs();
                         }
@@ -322,7 +340,6 @@ public class SellerServlet extends HttpServlet {
                     gd.releaseGood(goodname,goodprice,description,goodpicture);
                     ArrayList<Good> gls=new ArrayList<>();
                     gls=gd.getGoods();
-                    HttpSession hs=request.getSession();
                     hs.setAttribute("gls",gls);
                     //修改商品图片表
                     //gd.()
@@ -338,12 +355,16 @@ public class SellerServlet extends HttpServlet {
         //得到商品属性
         //冻结商品
         //跳回卖家界面
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
         int goodid=Integer.parseInt(request.getParameter("goodid"));
         GoodDao gd=new GoodImpl();
         try {
             gd.freezeGood(goodid);
             List<Good> gls = gd.getGoods();
-            HttpSession hs = request.getSession();
             hs.setAttribute("good",gls.get(0));
             hs.setAttribute("gls",gls);
             request.getRequestDispatcher("frozenGoods.jsp").forward(request, response);
@@ -358,6 +379,11 @@ public class SellerServlet extends HttpServlet {
         //冻结商品
         //用户与商品绑定
         //跳回交易界面
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
         int goodid=Integer.parseInt(request.getParameter("goodid").toString());
         int userid=Integer.parseInt(request.getParameter("userid").toString());
         GoodDao gd=new GoodImpl();
@@ -367,7 +393,6 @@ public class SellerServlet extends HttpServlet {
             sd.transactionFreezeGood(goodid,userid);
             //用户与商品绑定
             List<Good> gls = gd.getGoods();
-            HttpSession hs = request.getSession();
             hs.setAttribute("good",gls.get(0));
             hs.setAttribute("gls",gls);
 //            viewBuyerInfoChangeIndex(request, response);
@@ -377,14 +402,42 @@ public class SellerServlet extends HttpServlet {
         }
     }//交易冻结
 
+    protected void canceltransaction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
+        int goodid=Integer.parseInt(request.getParameter("goodid").toString());
+        int userid=Integer.parseInt(request.getParameter("userid").toString());
+        GoodDao gd=new GoodImpl();
+        SellerDao sd=new SellerDaoImpl();
+        try {
+            gd.goodBackOnline(goodid);
+            sd.cancelTransaction(goodid,userid);
+            //用户与商品绑定
+            List<Good> gls = gd.getGoods();
+            hs.setAttribute("good",gls.get(0));
+            hs.setAttribute("gls",gls);
+//            viewBuyerInfoChangeIndex(request, response);
+            request.getRequestDispatcher("customBuy.jsp").forward(request,response);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void goodBackOnline(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //得到商品属性
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
         int goodid=Integer.parseInt(request.getParameter("goodid").toString());
         GoodDao gd=new GoodImpl();
         try {
             gd.goodBackOnline(goodid);
             List<Good> gls = gd.getGoods();
-            HttpSession hs = request.getSession();
             hs.setAttribute("good",gls.get(0));
             hs.setAttribute("gls",gls);
 //            freezeGoodIndexChange(request, response);
@@ -395,6 +448,11 @@ public class SellerServlet extends HttpServlet {
     }
     protected void transactionSuccess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //得到商品属性
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
         int goodid=Integer.parseInt(request.getParameter("goodid").toString());
         GoodDao gd=new GoodImpl();
         try {
@@ -408,29 +466,35 @@ public class SellerServlet extends HttpServlet {
     protected void viewBuyerInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //得到意向购买goodid的userid
         //根据userid去user库中查找得到
-        HttpSession hs = request.getSession();
-        int goodid= ((Good)hs.getAttribute("good")).getGoodId();
+        HttpSession hs=request.getSession();
+        Seller se=(Seller) hs.getAttribute("seller");
+        if(se==null){
+            request.getRequestDispatcher("unlogin.jsp").forward(request,response);//商家未登录返回提示页面
+        }
         UserDao ud=new UserDaoimpl();
         ArrayList<User> ulist= new ArrayList<>();
         ArrayList<Integer> useridlist= null;
-        try {
-            useridlist=ud.getBuyerid(goodid);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        assert useridlist != null;
-        Iterator<Integer> useriditer=useridlist.iterator();
-        User u=null;
-        int userid;
-        while(useriditer.hasNext()){
-            userid=useriditer.next();//得到一位意向购买人的id
+        Good good=(Good) hs.getAttribute("good");
+        if(good!=null){
+            int goodid= ((Good)hs.getAttribute("good")).getGoodId();
             try {
-                u=ud.getBuyer(userid);
-                System.out.println(userid+"-"+u);
-                assert false;
-                ulist.add(u);
+                useridlist=ud.getBuyerid(goodid);
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+            assert useridlist != null;
+            Iterator<Integer> useriditer=useridlist.iterator();
+            User u=null;
+            int userid;
+            while(useriditer.hasNext()){
+                userid=useriditer.next();//得到一位意向购买人的id
+                try {
+                    u=ud.getBuyer(userid);
+                    assert false;
+                    ulist.add(u);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         hs.setAttribute("userlist",ulist);
@@ -438,6 +502,7 @@ public class SellerServlet extends HttpServlet {
 //        viewBuyerInfoChangeIndex(request, response);
         request.getRequestDispatcher("customBuy.jsp").forward(request,response);
     }
+
 //    protected void freezeGoodIndexChange(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
 //        int index = Integer.parseInt(request.getParameter("index"));
 //        HttpSession hs = request.getSession();

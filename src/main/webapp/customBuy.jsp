@@ -1,6 +1,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.good.vo.Good" %>
+<%@ page import="com.good.dao.GoodDao" %>
+<%@ page import="com.good.dao.GoodImpl" %>
+<%@ page import="com.seller.dao.SellerDao" %>
+<%@ page import="com.seller.daoimpl.SellerDaoImpl" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -155,6 +160,9 @@
     }
 </style>
 <script>
+    function cancel(uid,gid,index){
+        location.href = "SellerServlet?method=canceltransaction&goodid=" + gid + "&userid=" + uid + "&index=" + index;
+    }
     function buy(uid, gid, index) {
         location.href = "SellerServlet?method=transaction&goodid=" + gid + "&userid=" + uid + "&index=" + index;
     }
@@ -228,7 +236,7 @@
         <table class="title1">
             <tr id="title_tr" align="center">
                 <td width="60%" align="center"><a href="./setting.jsp" id="titleText">在 线 购 物 系 统</a></td>
-                <td width="10%" class="title_td"><a href="upload.jsp" class="astyle">发布商品</a></td>
+                <td width="10%" class="title_td"><c:if test="${sessionScope.gls.size()==0}"><a href="upload.jsp" class="astyle" >发布商品</a></c:if></td>
                 <td width="10%" class="title_td"><a href="SellerServlet?method=viewHisGoods" class="astyle">历史商品</a></td>
                 <td width="10%" class="title_td"><a href="SellerServlet?method=viewBuyerInfo" class="astyle">购买人</a></td>
                 <td width="10%" class="title_td"><a href="./frozenGoods.jsp" class="astyle">冻结商品</a></td>
@@ -241,13 +249,27 @@
         <div style="width: 100%; height: 50px"><input type="button" value="交易成功" class="cs" onclick="success('${sessionScope.good.goodId}', '${requestScope.index}')" style="float: right"></div>
         <table class="table table-hover" style="margin-top: 5px" id="tb1">
             <tr>
-                <th>用户ID</th><th>姓名</th><th>地址</th><th>出价</th><th>操作</th>
+                <th>  </th><th>用户ID</th><th>姓名</th><th>地址</th><th>出价</th><th>操作</th>
             </tr>
+            <%
+                Good g=new Good();
+                g=(Good)session.getAttribute("good");
+                if(g!=null)
+                {
+                    int s=g.getGoodId();
+                    GoodDao gd=new GoodImpl();
+                    SellerDao sd=new SellerDaoImpl();
+                    int ui=sd.findChosenUser(s);
+                    request.setAttribute("ui",ui);
+                }
+            %>
             <c:choose>
                 <c:when test="${not empty sessionScope.userlist}">
                     <c:forEach items="${sessionScope.userlist}" var="c" varStatus="s">
                         <tr style="margin-top: 50%">
-                            <td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td><td><input type="button" value="出售" class="cs" onclick="buy('${c.userid}', '${sessionScope.good.goodId}', '${requestScope.index}')"></td>
+                            <td><input type="checkbox" <c:if test="${c.userid==ui?true:false}"> checked="checked"</c:if> ><td>${c.userid}</td><td>${c.username}</td><td>${c.transactionaddress}</td><td>${c.userphone}</td>
+                            <c:if test="${c.userid==ui?true:false}"><td><input type="button" value="撤销" class="cs" onclick="cancel('${c.userid}', '${sessionScope.good.goodId}', '${requestScope.index}')"></td></c:if>
+                            <c:if test="${c.userid==ui?false:true}"><td><input type="button" value="出售" class="cs" onclick="buy('${c.userid}', '${sessionScope.good.goodId}', '${requestScope.index}')"></td></c:if>
                         </tr>
                     </c:forEach>
                 </c:when>
